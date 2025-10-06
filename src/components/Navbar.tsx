@@ -3,25 +3,15 @@ import { Button } from "@/components/ui/button";
 import domineLogo from "@/assets/domine-logo.png";
 
 const Navbar = () => {
-  const navItems = [
-    "HOME",
-    "BEST SELLERS",
-    "NEW ARRIVALS",
-    "T-SHIRTS",
-    "CONTACT",
-  ];
+  const navItems = ["HOME", "BEST SELLERS", "NEW ARRIVALS", "T-SHIRTS", "CONTACT"];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo - Top Right */}
+          {/* Logo - Top Left */}
           <div className="flex items-center gap-2 ml-auto order-3">
-            <img 
-              src={domineLogo} 
-              alt="DOMINE Logo" 
-              className="h-10 w-auto object-contain"
-            />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
           </div>
 
           {/* Navigation Links - Hidden on mobile */}
