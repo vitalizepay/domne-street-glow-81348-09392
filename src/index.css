@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 223 58% 7%;
+    --foreground: 0 0% 100%;
+
+    --card: 223 58% 7%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 223 58% 7%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 100% 62%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 200 100% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 200 100% 62%;
+
+    --radius: 0.75rem;
+    
+    --navy: 223 58% 7%;
+    --neon-blue: 200 100% 62%;
+    --silver: 0 0% 75%;
+    --jet-black: 0 0% 0%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 223 58% 7%;
+    --foreground: 0 0% 100%;
+
+    --card: 223 58% 7%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 223 58% 7%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 100% 62%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 200 100% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 200 100% 62%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+@layer utilities {
+  .neon-glow {
+    text-shadow: 0 0 10px hsl(var(--neon-blue)), 
+                 0 0 20px hsl(var(--neon-blue)), 
+                 0 0 30px hsl(var(--neon-blue));
+  }
+  
+  .neon-border {
+    border: 2px solid hsl(var(--neon-blue));
+    box-shadow: 0 0 10px hsl(var(--neon-blue) / 0.5),
+                inset 0 0 10px hsl(var(--neon-blue) / 0.2);
+  }
+  
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: shimmer 3s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+      transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+  }
+  
+  @keyframes neon-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow: 0 0 10px hsl(var(--neon-blue)), 
+                   0 0 20px hsl(var(--neon-blue)), 
+                   0 0 30px hsl(var(--neon-blue));
+      opacity: 1;
+    }
+    20%, 24%, 55% {
+      text-shadow: none;
+      opacity: 0.8;
+    }
+  }
+  
+  .neon-flicker {
+    animation: neon-flicker 2s infinite;
+  }
+  
+  @keyframes slide-in-right {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out;
+  }
+  
+  @keyframes breathing {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.03);
+    }
+  }
+  
+  .animate-breathing {
+    animation: breathing 3s ease-in-out infinite;
+  }
+}
