@@ -16,30 +16,30 @@ export interface Product {
 export const generateSlug = (folderName: string): string => {
   return folderName
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
     .trim();
 };
 
 // Map folder name to color dots
 export const getFolderColors = (folderName: string): string[] => {
   const name = folderName.toLowerCase();
-  
-  if (name.includes('black')) return ['#000000'];
-  if (name.includes('white')) return ['#FFFFFF'];
-  if (name.includes('mint green')) return ['#98FF98'];
-  if (name.includes('olive green')) return ['#6B8E23'];
-  if (name.includes('green')) return ['#228B22'];
-  if (name.includes('dusty rose') || name.includes('mauve')) return ['#DCAE96'];
-  if (name.includes('dusty blue')) return ['#6B9AC4'];
-  if (name.includes('light blue')) return ['#87CEEB'];
-  if (name.includes('dark gray') || name.includes('dark grey')) return ['#4A4A4A'];
-  if (name.includes('khaki')) return ['#C3B091'];
-  if (name.includes('rust')) return ['#B7410E'];
-  if (name.includes('tie-dye')) return ['#B7410E', '#000000'];
-  
-  return ['#000000']; // default
+
+  if (name.includes("black")) return ["#000000"];
+  if (name.includes("white")) return ["#FFFFFF"];
+  if (name.includes("mint green")) return ["#98FF98"];
+  if (name.includes("olive green")) return ["#6B8E23"];
+  if (name.includes("green")) return ["#228B22"];
+  if (name.includes("dusty rose") || name.includes("mauve")) return ["#DCAE96"];
+  if (name.includes("dusty blue")) return ["#6B9AC4"];
+  if (name.includes("light blue")) return ["#87CEEB"];
+  if (name.includes("dark gray") || name.includes("dark grey")) return ["#4A4A4A"];
+  if (name.includes("khaki")) return ["#C3B091"];
+  if (name.includes("rust")) return ["#B7410E"];
+  if (name.includes("tie-dye")) return ["#B7410E", "#000000"];
+
+  return ["#000000"]; // default
 };
 
 // Product folders in the images/bestseller directory
@@ -71,21 +71,23 @@ export const productFolders = [
 export const getProductFromFolder = (folderName: string): Product => {
   const slug = generateSlug(folderName);
   const colors = getFolderColors(folderName);
-  
+
   // Generate image paths - try both T-1 format and variations
-  const images = [1, 2, 3, 4, 5].map(i => {
-    // Most folders use T-1.png format
-    return `/images/collections/${folderName}/T-${i}.png`;
-  }).filter((_, index) => index < 4); // Only take first 4 images
-  
+  const images = [1, 2, 3, 4, 5]
+    .map((i) => {
+      // Most folders use T-1.png format
+      return `/images/collections/${folderName}/T-${i}.png`;
+    })
+    .filter((_, index) => index < 4); // Only take first 4 images
+
   return {
     id: slug,
     slug,
     name: "Men's Cut & Sew HD Print T-Shirt",
     folderName,
-    displayName: folderName.replace(/-T$/, '').replace(/ -T$/, '').trim(),
-    price: 1499,
-    originalPrice: 399,
+    displayName: folderName.replace(/-T$/, "").replace(/ -T$/, "").trim(),
+    price: 399,
+    originalPrice: 1299,
     images,
     colors,
   };
@@ -98,13 +100,13 @@ export const getAllProducts = (): Product[] => {
 
 // Get product by slug
 export const getProductBySlug = (slug: string): Product | null => {
-  const product = getAllProducts().find(p => p.slug === slug);
+  const product = getAllProducts().find((p) => p.slug === slug);
   return product || null;
 };
 
 // Get random products (for "You may also like")
 export const getRandomProducts = (excludeSlug: string, count: number = 4): Product[] => {
-  const allProducts = getAllProducts().filter(p => p.slug !== excludeSlug);
+  const allProducts = getAllProducts().filter((p) => p.slug !== excludeSlug);
   const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
