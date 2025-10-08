@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroSlide1 from "@/assets/hero-slide-1.jpg";
@@ -48,6 +49,7 @@ const slides: Slide[] = [
 ];
 
 const HeroSlider = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -124,6 +126,7 @@ const HeroSlider = () => {
                 {/* CTA Button */}
                 <Button
                   size="lg"
+                  onClick={() => navigate('/bestseller')}
                   className="neon-border bg-transparent hover:bg-accent hover:text-primary text-foreground font-bold text-sm tracking-widest px-8 py-6 rounded-full transition-all duration-300 animate-glow-pulse"
                 >
                   {slide.cta}

@@ -1,9 +1,17 @@
 import { Search, User, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import domineLogo from "@/assets/domine-logo.png";
 
 const Navbar = () => {
-  const navItems = ["HOME", "BEST SELLERS", "NEW ARRIVALS", "T-SHIRTS", "CONTACT"];
+  const navigate = useNavigate();
+  const navItems = [
+    { label: "HOME", path: "/" },
+    { label: "BEST SELLERS", path: "/bestseller" },
+    { label: "NEW ARRIVALS", path: "/" },
+    { label: "T-SHIRTS", path: "/" },
+    { label: "CONTACT", path: "/" },
+  ];
 
   return (
     <nav className="fixed top-0 right-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -18,10 +26,11 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-8 order-2">
             {navItems.map((item) => (
               <button
-                key={item}
+                key={item.label}
+                onClick={() => navigate(item.path)}
                 className="text-sm font-semibold tracking-wide text-foreground/80 hover:text-accent transition-colors duration-300 relative group"
               >
-                {item}
+                {item.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
               </button>
             ))}
