@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronRight } from "lucide-react";
 import { getAllProducts } from "@/utils/productData";
 
-const BestSeller = () => {
+const Collections = () => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("featured");
   const products = getAllProducts();
@@ -28,7 +28,7 @@ const BestSeller = () => {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/" className="hover:text-accent transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">Best Sellers</span>
+            <span className="text-foreground">Collections</span>
           </div>
         </div>
       </div>
@@ -65,25 +65,6 @@ const BestSeller = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Price */}
-              <div className="mb-8">
-                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Price</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded border-border" />
-                    <span className="text-sm">Under ₹1,000</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded border-border" />
-                    <span className="text-sm">₹1,000 - ₹2,000</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded border-border" />
-                    <span className="text-sm">Above ₹2,000</span>
-                  </label>
-                </div>
-              </div>
             </div>
           </aside>
 
@@ -92,7 +73,7 @@ const BestSeller = () => {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold mb-2">Best Sellers</h1>
+                <h1 className="text-3xl lg:text-4xl font-bold mb-2">Collections</h1>
                 <p className="text-muted-foreground">{products.length} products</p>
               </div>
 
@@ -147,7 +128,7 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
   return (
     <div
       className="group cursor-pointer"
-      onClick={() => navigate(`/bestseller/${product.slug}`)}
+      onClick={() => navigate(`/collections/${product.slug}`)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -159,8 +140,16 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isHovered ? 'opacity-0' : 'opacity-100'
           }`}
+          loading="lazy"
           onError={(e) => {
-            e.currentTarget.src = '/placeholder.svg';
+            e.currentTarget.style.display = 'none';
+            const parent = e.currentTarget.parentElement;
+            if (parent && !parent.querySelector('.fallback-img')) {
+              const fallback = document.createElement('img');
+              fallback.className = 'absolute inset-0 w-full h-full object-cover fallback-img';
+              fallback.src = '/placeholder.svg';
+              parent.appendChild(fallback);
+            }
           }}
         />
         
@@ -171,8 +160,16 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
+          loading="lazy"
           onError={(e) => {
-            e.currentTarget.src = '/placeholder.svg';
+            e.currentTarget.style.display = 'none';
+            const parent = e.currentTarget.parentElement;
+            if (parent && !parent.querySelector('.fallback-img')) {
+              const fallback = document.createElement('img');
+              fallback.className = 'absolute inset-0 w-full h-full object-cover fallback-img';
+              fallback.src = '/placeholder.svg';
+              parent.appendChild(fallback);
+            }
           }}
         />
 
@@ -208,10 +205,13 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
           ))}
         </div>
 
-        <p className="font-bold text-lg">₹{product.price.toLocaleString('en-IN')}</p>
+        <div className="flex items-center gap-2">
+          <p className="text-sm text-muted-foreground line-through">₹{product.originalPrice}</p>
+          <p className="font-bold text-lg">₹{product.price.toLocaleString('en-IN')}</p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default BestSeller;
+export default Collections;

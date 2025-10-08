@@ -7,19 +7,22 @@ const Navbar = () => {
   const navigate = useNavigate();
   const navItems = [
     { label: "HOME", path: "/" },
-    { label: "BEST SELLERS", path: "/bestseller" },
+    { label: "COLLECTIONS", path: "/collections" },
     { label: "NEW ARRIVALS", path: "/" },
-    { label: "T-SHIRTS", path: "/" },
+    { label: "YOUR DESIGN", path: "/" },
     { label: "CONTACT", path: "/" },
   ];
 
   return (
-    <nav className="fixed top-0 right-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo - Top right */}
-          <div className="flex items-center gap-2 ml-auto order-3">
-            <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
+          {/* Logo - Top left */}
+          <div 
+            className="flex items-center gap-2 cursor-pointer order-1"
+            onClick={() => navigate("/")}
+          >
+            <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
           </div>
 
           {/* Navigation Links - Hidden on mobile */}
@@ -37,7 +40,7 @@ const Navbar = () => {
           </div>
 
           {/* Icons */}
-          <div className="flex items-center gap-4 order-1">
+          <div className="flex items-center gap-4 order-3">
             <Button variant="ghost" size="icon" className="hover:text-accent">
               <User className="h-5 w-5" />
             </Button>

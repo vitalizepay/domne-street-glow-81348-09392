@@ -7,6 +7,7 @@ export interface Product {
   folderName: string;
   displayName: string;
   price: number;
+  originalPrice: number;
   images: string[];
   colors: string[];
 }
@@ -74,7 +75,7 @@ export const getProductFromFolder = (folderName: string): Product => {
   // Generate image paths - try both T-1 format and variations
   const images = [1, 2, 3, 4, 5].map(i => {
     // Most folders use T-1.png format
-    return `/images/bestseller/${folderName}/T-${i}.png`;
+    return `/images/collections/${folderName}/T-${i}.png`;
   }).filter((_, index) => index < 4); // Only take first 4 images
   
   return {
@@ -84,6 +85,7 @@ export const getProductFromFolder = (folderName: string): Product => {
     folderName,
     displayName: folderName.replace(/-T$/, '').replace(/ -T$/, '').trim(),
     price: 1499,
+    originalPrice: 399,
     images,
     colors,
   };

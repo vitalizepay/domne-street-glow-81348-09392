@@ -26,8 +26,8 @@ const ProductDetail = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
-          <Link to="/bestseller" className="text-accent hover:underline">
-            Back to Best Sellers
+          <Link to="/collections" className="text-accent hover:underline">
+            Back to Collections
           </Link>
         </div>
       </div>
@@ -47,7 +47,7 @@ const ProductDetail = () => {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/" className="hover:text-accent transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4" />
-            <Link to="/bestseller" className="hover:text-accent transition-colors">Best Sellers</Link>
+            <Link to="/collections" className="hover:text-accent transition-colors">Collections</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-foreground">{product.displayName}</span>
           </div>
@@ -65,8 +65,16 @@ const ProductDetail = () => {
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
                 className="w-full h-full object-cover"
+                loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.src = '/placeholder.svg';
+                  e.currentTarget.style.display = 'none';
+                  const parent = e.currentTarget.parentElement;
+                  if (parent && !parent.querySelector('.fallback-img')) {
+                    const fallback = document.createElement('img');
+                    fallback.className = 'w-full h-full object-cover fallback-img';
+                    fallback.src = '/placeholder.svg';
+                    parent.appendChild(fallback);
+                  }
                 }}
               />
             </div>
@@ -85,8 +93,16 @@ const ProductDetail = () => {
                     src={img}
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.src = '/placeholder.svg';
+                      e.currentTarget.style.display = 'none';
+                      const parent = e.currentTarget.parentElement;
+                      if (parent && !parent.querySelector('.fallback-img')) {
+                        const fallback = document.createElement('img');
+                        fallback.className = 'w-full h-full object-cover fallback-img';
+                        fallback.src = '/placeholder.svg';
+                        parent.appendChild(fallback);
+                      }
                     }}
                   />
                 </button>
@@ -114,7 +130,10 @@ const ProductDetail = () => {
           <div className="space-y-6">
             <div>
               <h1 className="text-3xl lg:text-4xl font-bold mb-2">{product.name}</h1>
-              <p className="text-2xl font-bold text-accent">₹{product.price.toLocaleString('en-IN')}</p>
+              <div className="flex items-center gap-3">
+                <p className="text-xl text-muted-foreground line-through">₹{product.originalPrice}</p>
+                <p className="text-2xl font-bold text-accent">₹{product.price.toLocaleString('en-IN')}</p>
+              </div>
             </div>
 
             {/* Color Options */}
@@ -197,7 +216,7 @@ const ProductDetail = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-xl">💬</span>
-                  <span className="text-sm">WhatsApp Enquiry: +91 9600110557</span>
+                  <span className="text-sm">WhatsApp Enquiry: +91 96001 10557</span>
                 </li>
               </ul>
             </div>
@@ -212,15 +231,23 @@ const ProductDetail = () => {
               <div
                 key={relatedProduct.id}
                 className="group cursor-pointer"
-                onClick={() => navigate(`/bestseller/${relatedProduct.slug}`)}
+                onClick={() => navigate(`/collections/${relatedProduct.slug}`)}
               >
                 <div className="relative overflow-hidden rounded-lg bg-muted mb-4 aspect-[3/4]">
                   <img
                     src={relatedProduct.images[0]}
                     alt={relatedProduct.displayName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.src = '/placeholder.svg';
+                      e.currentTarget.style.display = 'none';
+                      const parent = e.currentTarget.parentElement;
+                      if (parent && !parent.querySelector('.fallback-img')) {
+                        const fallback = document.createElement('img');
+                        fallback.className = 'w-full h-full object-cover fallback-img';
+                        fallback.src = '/placeholder.svg';
+                        parent.appendChild(fallback);
+                      }
                     }}
                   />
                 </div>
