@@ -73,8 +73,8 @@ const Collections = () => {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold mb-2 text-foreground">Collections</h1>
-                <p className="text-muted-foreground">{products.length} products</p>
+                <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">COLLECTIONS</h1>
+                <p className="text-base text-muted-foreground">{products.length} products</p>
               </div>
 
               {/* Sort */}
@@ -137,10 +137,12 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
         <img
           src={product.images[0]}
           alt={`${product.displayName} - Front view`}
+          loading="eager"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isHovered ? 'opacity-0' : 'opacity-100'
           }`}
           onError={(e) => {
+            console.error(`Failed to load image: ${product.images[0]}`);
             e.currentTarget.src = '/placeholder.svg';
           }}
         />
@@ -149,10 +151,12 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
         <img
           src={product.images[1] || product.images[0]}
           alt={`${product.displayName} - Back view`}
+          loading="eager"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
           onError={(e) => {
+            console.error(`Failed to load hover image: ${product.images[1]}`);
             e.currentTarget.src = product.images[0];
           }}
         />
