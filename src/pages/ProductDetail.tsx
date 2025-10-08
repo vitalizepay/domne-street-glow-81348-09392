@@ -65,16 +65,8 @@ const ProductDetail = () => {
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
                 className="w-full h-full object-cover"
-                loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const parent = e.currentTarget.parentElement;
-                  if (parent && !parent.querySelector('.fallback-img')) {
-                    const fallback = document.createElement('img');
-                    fallback.className = 'w-full h-full object-cover fallback-img';
-                    fallback.src = '/placeholder.svg';
-                    parent.appendChild(fallback);
-                  }
+                  e.currentTarget.src = '/placeholder.svg';
                 }}
               />
             </div>
@@ -93,16 +85,8 @@ const ProductDetail = () => {
                     src={img}
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
-                    loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      const parent = e.currentTarget.parentElement;
-                      if (parent && !parent.querySelector('.fallback-img')) {
-                        const fallback = document.createElement('img');
-                        fallback.className = 'w-full h-full object-cover fallback-img';
-                        fallback.src = '/placeholder.svg';
-                        parent.appendChild(fallback);
-                      }
+                      e.currentTarget.src = '/placeholder.svg';
                     }}
                   />
                 </button>
@@ -238,16 +222,8 @@ const ProductDetail = () => {
                     src={relatedProduct.images[0]}
                     alt={relatedProduct.displayName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      const parent = e.currentTarget.parentElement;
-                      if (parent && !parent.querySelector('.fallback-img')) {
-                        const fallback = document.createElement('img');
-                        fallback.className = 'w-full h-full object-cover fallback-img';
-                        fallback.src = '/placeholder.svg';
-                        parent.appendChild(fallback);
-                      }
+                      e.currentTarget.src = '/placeholder.svg';
                     }}
                   />
                 </div>

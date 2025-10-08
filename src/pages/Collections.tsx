@@ -73,7 +73,7 @@ const Collections = () => {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold mb-2">Collections</h1>
+                <h1 className="text-3xl lg:text-4xl font-bold mb-2 text-foreground">Collections</h1>
                 <p className="text-muted-foreground">{products.length} products</p>
               </div>
 
@@ -140,36 +140,20 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isHovered ? 'opacity-0' : 'opacity-100'
           }`}
-          loading="lazy"
           onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            const parent = e.currentTarget.parentElement;
-            if (parent && !parent.querySelector('.fallback-img')) {
-              const fallback = document.createElement('img');
-              fallback.className = 'absolute inset-0 w-full h-full object-cover fallback-img';
-              fallback.src = '/placeholder.svg';
-              parent.appendChild(fallback);
-            }
+            e.currentTarget.src = '/placeholder.svg';
           }}
         />
         
         {/* Hover Image */}
         <img
-          src={product.images[1]}
+          src={product.images[1] || product.images[0]}
           alt={`${product.displayName} - Back view`}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
-          loading="lazy"
           onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            const parent = e.currentTarget.parentElement;
-            if (parent && !parent.querySelector('.fallback-img')) {
-              const fallback = document.createElement('img');
-              fallback.className = 'absolute inset-0 w-full h-full object-cover fallback-img';
-              fallback.src = '/placeholder.svg';
-              parent.appendChild(fallback);
-            }
+            e.currentTarget.src = product.images[0];
           }}
         />
 

@@ -72,13 +72,8 @@ export const getProductFromFolder = (folderName: string): Product => {
   const slug = generateSlug(folderName);
   const colors = getFolderColors(folderName);
 
-  // Generate image paths - try both T-1 format and variations
-  const images = [1, 2, 3, 4, 5]
-    .map((i) => {
-      // Most folders use T-1.png format
-      return `/images/collections/${folderName}/T-${i}.png`;
-    })
-    .filter((_, index) => index < 4); // Only take first 4 images
+  // Generate image paths for production - using public folder
+  const images = [1, 2, 3, 4].map((i) => `/images/collections/${folderName}/T-${i}.png`);
 
   return {
     id: slug,
