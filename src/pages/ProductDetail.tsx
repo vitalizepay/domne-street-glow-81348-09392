@@ -7,15 +7,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SocialDock from "@/components/SocialDock";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Check, Droplets, Wind, Sparkles, Shirt, MessageCircle } from "lucide-react";
+import { ChevronRight, Check, Droplets, Wind, Sparkles, Shirt, MessageCircle, ChevronLeft } from "lucide-react";
 import { getProductBySlug, getRandomProducts } from "@/utils/productData";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,7 +17,20 @@ const ProductDetail = () => {
   const product = slug ? getProductBySlug(slug) : null;
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedImage, setSelectedImage] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [user, setUser] = useState<any>(null);
+
+  const nextImage = () => {
+    if (product) {
+      setSelectedImage((prev) => (prev + 1) % product.images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (product) {
+      setSelectedImage((prev) => (prev - 1 + product.images.length) % product.images.length);
+    }
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -108,15 +114,43 @@ const ProductDetail = () => {
           {/* Left - Image Carousel */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden">
+            <div className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group">
               <img
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-transform duration-500 cursor-zoom-in ${
+                  isZoomed ? 'scale-150' : 'hover:scale-110'
+                }`}
+                onClick={() => setIsZoomed(!isZoomed)}
                 onError={(e) => {
                   e.currentTarget.src = '/placeholder.svg';
                 }}
               />
+              
+              {/* Navigation Arrows */}
+              {product.images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="h-6 w-6 text-accent" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="h-6 w-6 text-accent" />
+                  </button>
+                </>
+              )}
+              
+              {/* Image Counter */}
+              <div className="absolute bottom-4 right-4 bg-background/80 px-3 py-1 rounded-full text-sm">
+                {selectedImage + 1} / {product.images.length}
+              </div>
             </div>
 
             {/* Thumbnails */}
@@ -145,7 +179,7 @@ const ProductDetail = () => {
             <div className="grid grid-cols-2 gap-4 pt-6">
               {[
                 { icon: Shirt, text: "Super Soft" },
-                { icon: Wind, text: "Super Stretch (90% Poly / 10% Spandex)" },
+                { icon: Wind, text: "100% Premium Cotton" },
                 { icon: Droplets, text: "Quick Dry" },
                 { icon: Droplets, text: "Moisture Wicking" },
                 { icon: Sparkles, text: "Anti-Wrinkle" },

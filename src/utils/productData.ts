@@ -70,13 +70,45 @@ export const productFolders = [
   "plane-white-t",
 ];
 
+// Map folder names to their specific image counts
+const folderImageCounts: Record<string, number> = {
+  "black-t": 2,
+  "mauve-t": 4,
+  "khaki-t": 4,
+  "plane-black-t": 4,
+  "m-t-ab": 5,
+  "mint-green-t": 5,
+  "olive-green-t": 5,
+  "dark-shade-of-gray-t": 5,
+};
+
 // Generate product from folder name
 export const getProductFromFolder = (folderName: string): Product => {
   const slug = generateSlug(folderName);
   const colors = getFolderColors(folderName);
 
-  // Generate image paths for production - using public folder
-  const images = [1, 2, 3, 4].map((i) => `/images/collections/${folderName}/T-${i}.png`);
+  // Determine the number of images for this product
+  const imageCount = folderImageCounts[folderName] || 4;
+  
+  // Generate image paths - try different naming patterns
+  const images: string[] = [];
+  for (let i = 1; i <= imageCount; i++) {
+    // Check for khaki-t which uses numbers without T- prefix
+    if (folderName === "khaki-t") {
+      images.push(`/images/collections/${folderName}/${i}.png`);
+    } else if (folderName === "plane-black-t") {
+      // Special case for plane-black-t which uses different filenames
+      const specialNames = [
+        "Gemini_Generated_Image_4vnbmr4vnbmr4vnb.png",
+        "Gemini_Generated_Image_55at8p55at8p55at.png",
+        "Gemini_Generated_Image_lmdgr6lmdgr6lmdg.png",
+        "Gemini_Generated_Image_uytrt4uytrt4uytr.png"
+      ];
+      images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
+    } else {
+      images.push(`/images/collections/${folderName}/T-${i}.png`);
+    }
+  }
 
   return {
     id: slug,

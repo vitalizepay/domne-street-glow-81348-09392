@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Search, User, ShoppingBag } from "lucide-react";
+import { Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import domineLogo from "@/assets/domine-logo.png";
+import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
 
 const Navbar = () => {
@@ -38,12 +39,12 @@ const Navbar = () => {
           </div>
 
           {/* Navigation Links - Hidden on mobile */}
-          <div className="hidden lg:flex items-center gap-8 order-2">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8 order-2">
             {navItems.map((item) => (
               <button
                 key={item.label}
                 onClick={() => navigate(item.path)}
-                className="text-sm font-semibold tracking-wide text-foreground/80 hover:text-accent transition-colors duration-300 relative group"
+                className="text-xs xl:text-sm font-semibold tracking-wide text-foreground/80 hover:text-accent transition-colors duration-300 relative group whitespace-nowrap"
               >
                 {item.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
@@ -62,10 +63,10 @@ const Navbar = () => {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:text-accent relative"
+              className="hover:opacity-80 relative transition-opacity"
               onClick={() => navigate("/cart")}
             >
-              <ShoppingBag className="h-5 w-5" />
+              <img src={cartIcon} alt="Cart" className="h-6 w-6 object-contain" />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}

@@ -36,7 +36,7 @@ const Collections = () => {
       <div className="container mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar - Filters */}
-          <aside className="lg:w-64 flex-shrink-0">
+          <aside className="lg:w-64 flex-shrink-0 hidden lg:block">
             <div className="sticky top-32">
               <h2 className="text-xl font-bold mb-6">Filters</h2>
               
@@ -71,17 +71,17 @@ const Collections = () => {
           {/* Main Content */}
           <main className="flex-1">
             {/* Header */}
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
               <div>
-                <h1 className="text-2xl lg:text-3xl font-bold mb-2 tracking-tight">COLLECTIONS</h1>
-                <p className="text-base text-muted-foreground">{products.length} products</p>
+                <h1 className="text-2xl lg:text-4xl font-bold mb-2 tracking-tight">COLLECTIONS</h1>
+                <p className="text-sm sm:text-base text-muted-foreground">{products.length} products</p>
               </div>
 
               {/* Sort */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 bg-muted border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                className="w-full sm:w-auto px-4 py-2 bg-muted border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -91,9 +91,14 @@ const Collections = () => {
             </div>
 
             {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {sortedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} navigate={navigate} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+              {sortedProducts.map((product, index) => (
+                <div
+                  key={product.id}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <ProductCard product={product} navigate={navigate} />
+                </div>
               ))}
             </div>
           </main>
@@ -127,22 +132,21 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
 
   return (
     <div
-      className="group cursor-pointer"
+      className="group cursor-pointer animate-fade-in"
       onClick={() => navigate(`/collections/${product.slug}`)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden rounded-lg bg-muted mb-4 aspect-[3/4]">
+      <div className="relative overflow-hidden rounded-lg bg-muted mb-4 aspect-[3/4] transition-transform duration-300 hover:scale-[1.02]">
         {/* Primary Image */}
         <img
           src={product.images[0]}
           alt={`${product.displayName} - Front view`}
-          loading="eager"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-            isHovered ? 'opacity-0' : 'opacity-100'
+          loading="lazy"
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+            isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
           }`}
           onError={(e) => {
-            console.error(`Failed to load image: ${product.images[0]}`);
             e.currentTarget.src = '/placeholder.svg';
           }}
         />
@@ -151,24 +155,23 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
         <img
           src={product.images[1] || product.images[0]}
           alt={`${product.displayName} - Back view`}
-          loading="eager"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-            isHovered ? 'opacity-100' : 'opacity-0'
+          loading="lazy"
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+            isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
           }`}
           onError={(e) => {
-            console.error(`Failed to load hover image: ${product.images[1]}`);
             e.currentTarget.src = product.images[0];
           }}
         />
 
         {/* Quick View on Hover */}
-        <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${
+        <div className={`absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}>
           <Button
             variant="secondary"
             size="sm"
-            className="pointer-events-none"
+            className="pointer-events-none bg-accent text-background hover:bg-accent/90 font-semibold"
           >
             Quick View
           </Button>
@@ -177,7 +180,7 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
 
       {/* Product Info */}
       <div className="space-y-2">
-        <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-accent transition-colors">
+        <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-accent transition-colors duration-300">
           {product.name}
         </h3>
         
@@ -186,7 +189,7 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
           {product.colors.map((color: string, index: number) => (
             <div
               key={index}
-              className="w-5 h-5 rounded-full border-2 border-border"
+              className="w-5 h-5 rounded-full border-2 border-border hover:border-accent transition-colors"
               style={{ backgroundColor: color }}
               title={product.displayName}
             />
@@ -195,7 +198,7 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
 
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground line-through">₹{product.originalPrice}</p>
-          <p className="font-bold text-lg">₹{product.price.toLocaleString('en-IN')}</p>
+          <p className="font-bold text-lg text-accent">₹{product.price.toLocaleString('en-IN')}</p>
         </div>
       </div>
     </div>
