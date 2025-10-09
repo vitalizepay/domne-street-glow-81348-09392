@@ -1,22 +1,17 @@
 import { Facebook, Instagram, Youtube, MessageCircle } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const socialLinks = [
   {
     name: "Facebook",
     icon: Facebook,
-    url: "https://facebook.com/YOURPAGE",
+    url: "https://www.facebook.com/profile.php?id=61580278718458",
     ariaLabel: "Visit our Facebook page",
   },
   {
     name: "Instagram",
     icon: Instagram,
-    url: "https://instagram.com/YOURHANDLE",
+    url: "https://www.instagram.com/domine_mens_clothing?utm_source=qr&igsh=MWM0dDFkeXhlamx5ZA==",
     ariaLabel: "Follow us on Instagram",
   },
   {
