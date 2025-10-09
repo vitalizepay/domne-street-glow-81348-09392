@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { cartStore } from "@/utils/cartStore";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SocialDock from "@/components/SocialDock";
@@ -38,9 +39,20 @@ const ProductDetail = () => {
   }, []);
 
   const handleAddToCart = () => {
+    if (!product) return;
+    
+    cartStore.addToCart({
+      productId: product.id,
+      productName: product.name,
+      productSlug: product.slug,
+      price: product.price,
+      size: selectedSize,
+      image: product.images[0],
+    });
+
     toast({
       title: "Added to cart!",
-      description: `${product?.name} (${selectedSize}) added to your cart`,
+      description: `${product.name} (${selectedSize}) added to your cart`,
     });
   };
 

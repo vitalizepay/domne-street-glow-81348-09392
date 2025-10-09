@@ -1,10 +1,23 @@
+import { useState, useEffect } from "react";
 import { Search, User, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import domineLogo from "@/assets/domine-logo.png";
+import { cartStore } from "@/utils/cartStore";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      setCartCount(cartStore.getCartCount());
+    };
+    
+    updateCartCount();
+    window.addEventListener('cart-updated', updateCartCount);
+    return () => window.removeEventListener('cart-updated', updateCartCount);
+  }, []);
   const navItems = [
     { label: "HOME", path: "/" },
     { label: "COLLECTIONS", path: "/collections" },
@@ -46,8 +59,18 @@ const Navbar = () => {
             <Button variant="ghost" size="icon" className="hover:text-accent">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="hover:text-accent lg:hidden">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:text-accent relative"
+              onClick={() => navigate("/cart")}
+            >
               <ShoppingBag className="h-5 w-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Button>
           </div>
         </div>
