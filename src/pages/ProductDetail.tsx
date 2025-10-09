@@ -45,8 +45,17 @@ const ProductDetail = () => {
   }, []);
 
   const handleAddToCart = () => {
+    if (!selectedSize) {
+      toast({
+        title: "Please select a size",
+        description: "Choose a size before adding to cart",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!product) return;
-    
+
     cartStore.addToCart({
       productId: product.id,
       productName: product.name,
@@ -56,8 +65,14 @@ const ProductDetail = () => {
       image: product.images[0],
     });
 
+    // Redirect to WhatsApp with order details
+    const message = encodeURIComponent(
+      `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`
+    );
+    window.open(`https://wa.me/919791881884?text=${message}`, '_blank');
+
     toast({
-      title: "Added to cart!",
+      title: "Redirecting to WhatsApp!",
       description: `${product.name} (${selectedSize}) added to your cart`,
     });
   };

@@ -45,29 +45,29 @@ export const getFolderColors = (folderName: string): string[] => {
   return ["#000000"]; // default
 };
 
-// Product folders in the images/collections directory
+// Product folders in the images/collections directory - rearranged order
 export const productFolders = [
-  "black-t",
-  "black-t-2",
-  "white-t",
-  "white-t-2",
-  "dusty-blue-t",
-  "dusty-rose-t",
-  "mauve-t",
   "mint-green-t",
+  "black-t",
+  "dusty-rose-t",
+  "plane-white-t",
   "olive-green-t",
-  "green-t",
-  "khaki-t",
+  "white-t-2",
+  "mauve-t",
   "dark-grey",
-  "dark-shade-of-gray-t",
-  "very-dark-shade-of-blue",
-  "light-blue-t",
   "rust-tie-dye-t",
+  "black-t-2",
+  "light-blue-t",
+  "khaki-t",
+  "dusty-blue-t",
+  "plane-black-t",
+  "green-t",
+  "very-dark-shade-of-blue",
+  "white-t",
   "tie-dye-brown-black",
+  "dark-shade-of-gray-t",
   "g-t",
   "m-t-ab",
-  "plane-black-t",
-  "plane-white-t",
 ];
 
 // Map folder names to their specific image counts

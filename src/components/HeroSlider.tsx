@@ -23,7 +23,6 @@ const slides: Slide[] = [
     title: "THE FIT THAT DEFINES YOU",
     subtitle: "Drop 01 / Bold & Confident",
     cta: "SHOP MEN'S TEES",
-    titleClass: "neon-flicker",
   },
   {
     image: heroSlide2,

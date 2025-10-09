@@ -33,76 +33,44 @@ const Collections = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar - Filters */}
-          <aside className="lg:w-64 flex-shrink-0 hidden lg:block">
-            <div className="sticky top-32">
-              <h2 className="text-xl font-bold mb-6">Filters</h2>
-              
-              {/* Category */}
-              <div className="mb-8">
-                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Category</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded border-border" />
-                    <span className="text-sm">Men Best Sellers</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Size */}
-              <div className="mb-8">
-                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Size</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['S', 'M', 'L', 'XL', '2XL'].map(size => (
-                    <button
-                      key={size}
-                      className="px-4 py-2 border border-border rounded-md hover:bg-accent hover:text-background transition-colors text-sm"
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
+      <div className="container mx-auto px-6 py-8 lg:py-12">
+        {/* Main Content */}
+        <main className="w-full">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+            <div>
+              <h1 className="text-3xl lg:text-5xl font-bold tracking-tight">MEN'S COLLECTION</h1>
+              <p className="text-base text-muted-foreground mt-2">{products.length} products</p>
             </div>
-          </aside>
 
-          {/* Main Content */}
-          <main className="flex-1">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-              <div>
-                <h1 className="text-2xl lg:text-4xl font-bold mb-2 tracking-tight">COLLECTIONS</h1>
-                <p className="text-sm sm:text-base text-muted-foreground">{products.length} products</p>
-              </div>
-
-              {/* Sort */}
+            {/* Sort */}
+            <div className="w-full sm:w-auto">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full sm:w-auto px-4 py-2 bg-muted border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+                className="w-full sm:w-auto px-6 py-3 bg-muted border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent uppercase tracking-wide cursor-pointer"
               >
-                <option value="featured">Featured</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="newest">Newest</option>
+                <option value="featured">Sort By: Featured</option>
+                <option value="price-low">Sort By: Price Low to High</option>
+                <option value="price-high">Sort By: Price High to Low</option>
+                <option value="newest">Sort By: Newest</option>
               </select>
             </div>
+          </div>
 
-            {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {sortedProducts.map((product, index) => (
-                <div
-                  key={product.id}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <ProductCard product={product} navigate={navigate} />
-                </div>
-              ))}
-            </div>
-          </main>
-        </div>
+          {/* Product Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
+            {sortedProducts.map((product, index) => (
+              <div
+                key={product.id}
+                className="animate-fade-in"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <ProductCard product={product} navigate={navigate} />
+              </div>
+            ))}
+          </div>
+        </main>
       </div>
 
       {/* Floating WhatsApp Button */}
@@ -132,12 +100,12 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
 
   return (
     <div
-      className="group cursor-pointer animate-fade-in"
+      className="group cursor-pointer"
       onClick={() => navigate(`/collections/${product.slug}`)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden rounded-lg bg-muted mb-4 aspect-[3/4] transition-transform duration-300 hover:scale-[1.02]">
+      <div className="relative overflow-hidden rounded-lg bg-muted mb-3 aspect-[3/4] transition-all duration-500 hover:shadow-2xl hover:shadow-accent/20">
         {/* Primary Image */}
         <img
           src={product.images[0]}
@@ -163,42 +131,31 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
             e.currentTarget.src = product.images[0];
           }}
         />
-
-        {/* Quick View on Hover */}
-        <div className={`absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
-          isHovered ? 'opacity-100' : 'opacity-0'
-        }`}>
-          <Button
-            variant="secondary"
-            size="sm"
-            className="pointer-events-none bg-accent text-background hover:bg-accent/90 font-semibold"
-          >
-            Quick View
-          </Button>
-        </div>
       </div>
 
       {/* Product Info */}
       <div className="space-y-2">
-        <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-accent transition-colors duration-300">
+        <h3 className="font-medium text-xs sm:text-sm line-clamp-2 group-hover:text-accent transition-colors duration-300">
           {product.name}
         </h3>
         
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <p className="font-bold text-base sm:text-lg">₹{product.price.toLocaleString('en-IN')}</p>
+            <p className="text-xs text-muted-foreground line-through">₹{product.originalPrice}</p>
+          </div>
+        </div>
+
         {/* Color Dots */}
-        <div className="flex gap-2">
-          {product.colors.map((color: string, index: number) => (
+        <div className="flex gap-1.5">
+          {product.colors.slice(0, 4).map((color: string, index: number) => (
             <div
               key={index}
-              className="w-5 h-5 rounded-full border-2 border-border hover:border-accent transition-colors"
+              className="w-4 h-4 rounded-full border border-border group-hover:border-accent transition-colors"
               style={{ backgroundColor: color }}
               title={product.displayName}
             />
           ))}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <p className="text-sm text-muted-foreground line-through">₹{product.originalPrice}</p>
-          <p className="font-bold text-lg text-accent">₹{product.price.toLocaleString('en-IN')}</p>
         </div>
       </div>
     </div>
