@@ -8,7 +8,6 @@ const Navbar = () => {
   const navItems = [
     { label: "HOME", path: "/" },
     { label: "COLLECTIONS", path: "/collections" },
-    { label: "NEW ARRIVALS", path: "/" },
     { label: "YOUR DESIGN", path: "/" },
     { label: "CONTACT", path: "/" },
   ];

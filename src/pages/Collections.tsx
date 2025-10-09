@@ -73,7 +73,7 @@ const Collections = () => {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">COLLECTIONS</h1>
+                <h1 className="text-2xl lg:text-3xl font-bold mb-2 tracking-tight">COLLECTIONS</h1>
                 <p className="text-base text-muted-foreground">{products.length} products</p>
               </div>
 

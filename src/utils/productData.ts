@@ -28,43 +28,46 @@ export const getFolderColors = (folderName: string): string[] => {
 
   if (name.includes("black")) return ["#000000"];
   if (name.includes("white")) return ["#FFFFFF"];
-  if (name.includes("mint green")) return ["#98FF98"];
-  if (name.includes("olive green")) return ["#6B8E23"];
+  if (name.includes("mint-green")) return ["#98FF98"];
+  if (name.includes("olive-green")) return ["#6B8E23"];
   if (name.includes("green")) return ["#228B22"];
-  if (name.includes("dusty rose") || name.includes("mauve")) return ["#DCAE96"];
-  if (name.includes("dusty blue")) return ["#6B9AC4"];
-  if (name.includes("light blue")) return ["#87CEEB"];
-  if (name.includes("dark gray") || name.includes("dark grey")) return ["#4A4A4A"];
+  if (name.includes("dusty-rose") || name.includes("mauve")) return ["#DCAE96"];
+  if (name.includes("dusty-blue")) return ["#6B9AC4"];
+  if (name.includes("light-blue")) return ["#87CEEB"];
+  if (name.includes("dark-gray") || name.includes("dark-grey") || name.includes("dark-shade-of-gray")) return ["#4A4A4A"];
+  if (name.includes("very-dark-shade-of-blue")) return ["#1a1a2e"];
   if (name.includes("khaki")) return ["#C3B091"];
   if (name.includes("rust")) return ["#B7410E"];
   if (name.includes("tie-dye")) return ["#B7410E", "#000000"];
+  if (name.includes("g-t")) return ["#808080"];
+  if (name.includes("m-t-ab")) return ["#A0522D"];
 
   return ["#000000"]; // default
 };
 
-// Product folders in the images/bestseller directory
+// Product folders in the images/collections directory
 export const productFolders = [
-  "Black-T",
-  "Black-T 2",
-  "White-T",
-  "White-T 2",
-  "Dusty Blue-T",
-  "Dusty Rose - T",
-  "Mauve-T",
-  "Mint Green -T",
-  "Olive Green-T",
-  "Green-T",
-  "Khaki-T",
-  "Dark Grey",
-  "dark shade of gray-T",
-  "very dark shade of blue",
-  "Light Blue-T",
-  "Rust Tie-Dye - T",
-  "Tie-Dye (Brown & Black)",
-  "G-T",
-  "M-T-AB",
-  "Plane Black-T",
-  "Plane White -T",
+  "black-t",
+  "black-t-2",
+  "white-t",
+  "white-t-2",
+  "dusty-blue-t",
+  "dusty-rose-t",
+  "mauve-t",
+  "mint-green-t",
+  "olive-green-t",
+  "green-t",
+  "khaki-t",
+  "dark-grey",
+  "dark-shade-of-gray-t",
+  "very-dark-shade-of-blue",
+  "light-blue-t",
+  "rust-tie-dye-t",
+  "tie-dye-brown-black",
+  "g-t",
+  "m-t-ab",
+  "plane-black-t",
+  "plane-white-t",
 ];
 
 // Generate product from folder name
@@ -80,7 +83,7 @@ export const getProductFromFolder = (folderName: string): Product => {
     slug,
     name: "Men's Cut & Sew HD Print T-Shirt",
     folderName,
-    displayName: folderName.replace(/-T$/, "").replace(/ -T$/, "").trim(),
+    displayName: folderName.replace(/-t$/, "").replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
     price: 399,
     originalPrice: 1299,
     images,
