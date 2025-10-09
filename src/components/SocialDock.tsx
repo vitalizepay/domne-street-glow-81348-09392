@@ -24,7 +24,7 @@ const socialLinks = [
   {
     name: "WhatsApp",
     icon: MessageCircle,
-    url: "https://wa.me/9791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees.",
+    url: "https://wa.me/919791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees.",
     ariaLabel: "Chat with us on WhatsApp",
   },
 ];
@@ -42,8 +42,8 @@ const getIconColor = (name: string) => {
 const SocialDock = () => {
   const location = useLocation();
   
-  // Don't render on Collections page
-  if (location.pathname === '/collections') {
+  // Only render on landing page
+  if (location.pathname !== '/') {
     return null;
   }
 
