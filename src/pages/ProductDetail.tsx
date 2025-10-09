@@ -37,7 +37,9 @@ const ProductDetail = () => {
       setUser(session?.user ?? null);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
     });
 
@@ -67,9 +69,9 @@ const ProductDetail = () => {
 
     // Redirect to WhatsApp with order details
     const message = encodeURIComponent(
-      `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`
+      `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`,
     );
-    window.open(`https://wa.me/919791881884?text=${message}`, '_blank');
+    window.open(`https://wa.me/+919791881884?text=${message}`, "_blank");
 
     toast({
       title: "Redirecting to WhatsApp!",
@@ -82,7 +84,7 @@ const ProductDetail = () => {
       navigate("/auth", { state: { from: `/collections/${slug}` } });
       return;
     }
-    
+
     toast({
       title: "Proceeding to checkout",
       description: "Taking you to checkout...",
@@ -109,14 +111,18 @@ const ProductDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       {/* Breadcrumb */}
       <div className="sticky top-[73px] z-40 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="container mx-auto px-6 py-3">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-accent transition-colors">Home</Link>
+            <Link to="/" className="hover:text-accent transition-colors">
+              Home
+            </Link>
             <ChevronRight className="h-4 w-4" />
-            <Link to="/collections" className="hover:text-accent transition-colors">Collections</Link>
+            <Link to="/collections" className="hover:text-accent transition-colors">
+              Collections
+            </Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-foreground">{product.displayName}</span>
           </div>
@@ -134,14 +140,14 @@ const ProductDetail = () => {
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
                 className={`w-full h-full object-cover transition-transform duration-500 cursor-zoom-in ${
-                  isZoomed ? 'scale-150' : 'hover:scale-110'
+                  isZoomed ? "scale-150" : "hover:scale-110"
                 }`}
                 onClick={() => setIsZoomed(!isZoomed)}
                 onError={(e) => {
-                  e.currentTarget.src = '/placeholder.svg';
+                  e.currentTarget.src = "/placeholder.svg";
                 }}
               />
-              
+
               {/* Navigation Arrows */}
               {product.images.length > 1 && (
                 <>
@@ -161,7 +167,7 @@ const ProductDetail = () => {
                   </button>
                 </>
               )}
-              
+
               {/* Image Counter */}
               <div className="absolute bottom-4 right-4 bg-background/80 px-3 py-1 rounded-full text-sm">
                 {selectedImage + 1} / {product.images.length}
@@ -175,7 +181,7 @@ const ProductDetail = () => {
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`aspect-square bg-muted rounded-lg overflow-hidden border-2 transition-all ${
-                    selectedImage === index ? 'border-accent' : 'border-transparent hover:border-border'
+                    selectedImage === index ? "border-accent" : "border-transparent hover:border-border"
                   }`}
                 >
                   <img
@@ -183,7 +189,7 @@ const ProductDetail = () => {
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.currentTarget.src = '/placeholder.svg';
+                      e.currentTarget.src = "/placeholder.svg";
                     }}
                   />
                 </button>
@@ -213,7 +219,7 @@ const ProductDetail = () => {
               <h1 className="text-3xl lg:text-4xl font-bold mb-2">{product.name}</h1>
               <div className="flex items-center gap-3">
                 <p className="text-xl text-muted-foreground line-through">₹{product.originalPrice}</p>
-                <p className="text-2xl font-bold text-accent">₹{product.price.toLocaleString('en-IN')}</p>
+                <p className="text-2xl font-bold text-accent">₹{product.price.toLocaleString("en-IN")}</p>
               </div>
             </div>
 
@@ -242,8 +248,8 @@ const ProductDetail = () => {
                     onClick={() => setSelectedSize(size)}
                     className={`px-6 py-3 border-2 rounded-lg font-semibold transition-all ${
                       selectedSize === size
-                        ? 'border-accent bg-accent text-background'
-                        : 'border-border hover:border-accent'
+                        ? "border-accent bg-accent text-background"
+                        : "border-border hover:border-accent"
                     }`}
                   >
                     {size}
@@ -254,16 +260,16 @@ const ProductDetail = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-4 pt-4">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="flex-1 bg-accent hover:bg-accent/90 text-background font-bold"
                 onClick={handleAddToCart}
               >
                 Add to Cart
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
+              <Button
+                size="lg"
+                variant="outline"
                 className="flex-1 border-2 border-accent text-accent hover:bg-accent hover:text-background font-bold"
                 onClick={handleBuyNow}
               >
@@ -282,7 +288,7 @@ const ProductDetail = () => {
                   "Quick Dry",
                   "Moisture Wicking",
                   "Anti-Wrinkle",
-                  "Tailored Fit for Trendy Style"
+                  "Tailored Fit for Trendy Style",
                 ].map((feature, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-accent flex-shrink-0" />
@@ -329,14 +335,14 @@ const ProductDetail = () => {
                     alt={relatedProduct.displayName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
-                      e.currentTarget.src = '/placeholder.svg';
+                      e.currentTarget.src = "/placeholder.svg";
                     }}
                   />
                 </div>
                 <h3 className="font-semibold text-sm line-clamp-2 mb-2 group-hover:text-accent transition-colors">
                   {relatedProduct.name}
                 </h3>
-                <p className="font-bold">₹{relatedProduct.price.toLocaleString('en-IN')}</p>
+                <p className="font-bold">₹{relatedProduct.price.toLocaleString("en-IN")}</p>
               </div>
             ))}
           </div>
@@ -345,7 +351,7 @@ const ProductDetail = () => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/9791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
+        href="https://wa.me/919600110557?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-[9998] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
