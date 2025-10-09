@@ -71,7 +71,7 @@ const ProductDetail = () => {
     const message = encodeURIComponent(
       `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`,
     );
-    window.open(`https://wa.me/919791881884?text=${message}`, "_blank");
+    window.open(`https://wa.me/+919791881884?text=${message}`, "_blank");
 
     toast({
       title: "Redirecting to WhatsApp!",
@@ -351,7 +351,7 @@ const ProductDetail = () => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/919791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
+        href="https://wa.me/919600110557?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-[9998] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
