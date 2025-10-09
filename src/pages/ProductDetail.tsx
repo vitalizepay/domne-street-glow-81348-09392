@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SocialDock from "@/components/SocialDock";
@@ -17,9 +19,43 @@ import {
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const product = slug ? getProductBySlug(slug) : null;
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedImage, setSelectedImage] = useState(0);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleAddToCart = () => {
+    toast({
+      title: "Added to cart!",
+      description: `${product?.name} (${selectedSize}) added to your cart`,
+    });
+  };
+
+  const handleBuyNow = () => {
+    if (!user) {
+      navigate("/auth", { state: { from: `/collections/${slug}` } });
+      return;
+    }
+    
+    toast({
+      title: "Proceeding to checkout",
+      description: "Taking you to checkout...",
+    });
+    // TODO: Navigate to checkout page
+  };
 
   if (!product) {
     return (
@@ -157,10 +193,19 @@ const ProductDetail = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-4 pt-4">
-              <Button size="lg" className="flex-1 bg-accent hover:bg-accent/90 text-background font-bold">
+              <Button 
+                size="lg" 
+                className="flex-1 bg-accent hover:bg-accent/90 text-background font-bold"
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </Button>
-              <Button size="lg" variant="outline" className="flex-1 border-2 border-accent text-accent hover:bg-accent hover:text-background font-bold">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="flex-1 border-2 border-accent text-accent hover:bg-accent hover:text-background font-bold"
+                onClick={handleBuyNow}
+              >
                 Buy Now
               </Button>
             </div>
