@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Youtube, MessageCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useLocation } from "react-router-dom";
 
 const socialLinks = [
   {
@@ -23,7 +24,7 @@ const socialLinks = [
   {
     name: "WhatsApp",
     icon: MessageCircle,
-    url: "https://wa.me/YOURNUMBER?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees.",
+    url: "https://wa.me/9791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees.",
     ariaLabel: "Chat with us on WhatsApp",
   },
 ];
@@ -39,10 +40,17 @@ const getIconColor = (name: string) => {
 };
 
 const SocialDock = () => {
+  const location = useLocation();
+  
+  // Don't render on Collections page
+  if (location.pathname === '/collections') {
+    return null;
+  }
+
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="fixed top-1/2 -translate-y-1/2 right-6 z-[9999] animate-slide-in-right">
-        <div className="flex flex-col gap-3.5 bg-background/30 backdrop-blur-md p-3 rounded-full shadow-lg animate-breathing">
+      <div className="fixed top-1/2 -translate-y-1/2 right-3 sm:right-6 z-[9999] animate-slide-in-right">
+        <div className="flex flex-col gap-2 sm:gap-3.5 bg-background/30 backdrop-blur-md p-2 sm:p-3 rounded-full shadow-lg">
           {socialLinks.map((social) => {
             const Icon = social.icon;
             return (
@@ -53,9 +61,9 @@ const SocialDock = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.ariaLabel}
-                    className={`w-14 h-14 lg:w-14 lg:h-14 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${getIconColor(social.name)}`}
+                    className={`w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${getIconColor(social.name)}`}
                   >
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-4 h-4 sm:w-6 sm:h-6" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent side="left" className="animate-fade-in">

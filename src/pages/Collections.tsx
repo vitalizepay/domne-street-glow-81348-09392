@@ -33,14 +33,13 @@ const Collections = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8 lg:py-12">
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 lg:py-12">
         {/* Main Content */}
         <main className="w-full">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-10">
             <div>
-              <h1 className="text-3xl lg:text-5xl font-bold tracking-tight">MEN'S COLLECTION</h1>
-              <p className="text-base text-muted-foreground mt-2">{products.length} products</p>
+              <p className="text-sm sm:text-base text-muted-foreground">{products.length} products</p>
             </div>
 
             {/* Sort */}
@@ -48,7 +47,7 @@ const Collections = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full sm:w-auto px-6 py-3 bg-muted border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent uppercase tracking-wide cursor-pointer"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-muted border border-border rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent uppercase tracking-wide cursor-pointer"
               >
                 <option value="featured">Sort By: Featured</option>
                 <option value="price-low">Sort By: Price Low to High</option>
@@ -75,7 +74,7 @@ const Collections = () => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/919600110557?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
+        href="https://wa.me/9791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-[9998] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
@@ -83,8 +82,6 @@ const Collections = () => {
       >
         <MessageCircle className="h-6 w-6" />
       </a>
-
-      <SocialDock />
       <Footer />
     </div>
   );
@@ -100,12 +97,12 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
 
   return (
     <div
-      className="group cursor-pointer"
+      className="group cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
       onClick={() => navigate(`/collections/${product.slug}`)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden rounded-lg bg-muted mb-3 aspect-[3/4] transition-all duration-500 hover:shadow-2xl hover:shadow-accent/20">
+      <div className="relative overflow-hidden rounded-lg bg-muted mb-3 aspect-[3/4] transition-all duration-500 hover:shadow-xl hover:shadow-accent/10">
         {/* Primary Image */}
         <img
           src={product.images[0]}
@@ -134,24 +131,24 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
       </div>
 
       {/* Product Info */}
-      <div className="space-y-2">
+      <div className="space-y-1.5 sm:space-y-2">
         <h3 className="font-medium text-xs sm:text-sm line-clamp-2 group-hover:text-accent transition-colors duration-300">
           {product.name}
         </h3>
         
         <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <p className="font-bold text-base sm:text-lg">₹{product.price.toLocaleString('en-IN')}</p>
-            <p className="text-xs text-muted-foreground line-through">₹{product.originalPrice}</p>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <p className="font-bold text-sm sm:text-base lg:text-lg text-accent">₹{product.price.toLocaleString('en-IN')}</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground line-through">₹{product.originalPrice}</p>
           </div>
         </div>
 
         {/* Color Dots */}
-        <div className="flex gap-1.5">
+        <div className="flex gap-1 sm:gap-1.5">
           {product.colors.slice(0, 4).map((color: string, index: number) => (
             <div
               key={index}
-              className="w-4 h-4 rounded-full border border-border group-hover:border-accent transition-colors"
+              className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border border-border group-hover:border-accent transition-colors"
               style={{ backgroundColor: color }}
               title={product.displayName}
             />

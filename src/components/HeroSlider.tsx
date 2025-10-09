@@ -126,7 +126,7 @@ const HeroSlider = () => {
                 <Button
                   size="lg"
                   onClick={() => navigate('/collections')}
-                  className="neon-border bg-transparent hover:bg-accent hover:text-primary text-foreground font-bold text-sm tracking-widest px-8 py-6 rounded-full transition-all duration-300 animate-glow-pulse"
+                  className="bg-accent hover:bg-accent/90 text-background font-bold text-sm tracking-widest px-8 py-6 rounded-full border-2 border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105"
                 >
                   {slide.cta}
                 </Button>
