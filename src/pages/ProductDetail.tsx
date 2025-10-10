@@ -144,7 +144,8 @@ const ProductDetail = () => {
                 }`}
                 onClick={() => setIsZoomed(!isZoomed)}
                 onError={(e) => {
-                  e.currentTarget.src = "/placeholder.svg";
+                  // Fallback to first valid image instead of placeholder
+                  e.currentTarget.src = product.images[0];
                 }}
               />
 
@@ -189,7 +190,7 @@ const ProductDetail = () => {
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.currentTarget.src = "/placeholder.svg";
+                      e.currentTarget.src = product.images[0];
                     }}
                   />
                 </button>
