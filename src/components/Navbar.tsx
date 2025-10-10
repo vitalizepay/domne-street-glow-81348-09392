@@ -23,7 +23,7 @@ const Navbar = () => {
     { label: "HOME", path: "/" },
     { label: "COLLECTIONS", path: "/collections" },
     { label: "YOUR DESIGN", path: "/" },
-    { label: "CONTACT", path: "/" },
+    { label: "CONTACT", path: "/contact" },
   ];
 
   return (
@@ -54,10 +54,23 @@ const Navbar = () => {
 
           {/* Icons */}
           <div className="flex items-center gap-4 order-3">
-            <Button variant="ghost" size="icon" className="hover:text-accent">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:text-accent"
+              onClick={() => navigate("/auth")}
+            >
               <User className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="hover:text-accent">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:text-accent"
+              onClick={() => {
+                // TODO: Implement search functionality
+                console.log("Search clicked");
+              }}
+            >
               <Search className="h-5 w-5" />
             </Button>
             <Button 
