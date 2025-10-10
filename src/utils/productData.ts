@@ -105,6 +105,9 @@ for (let i = 1; i <= imageCount; i++) {
       "Gemini_Generated_Image_uytrt4uytrt4uytr.png"
     ];
     images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
+  } else if (folderName === "black-t") {
+    const specialNames = ["T-1.png", "T-2.png", "T-3.png", "T-4.png"]; // ensure unique 4 images
+    images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
   } else {
     images.push(`/images/collections/${folderName}/T-${i}.png`);
   }
