@@ -105,10 +105,6 @@ for (let i = 1; i <= imageCount; i++) {
       "Gemini_Generated_Image_uytrt4uytrt4uytr.png"
     ];
     images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
-  } else if (folderName === "mauve-t") {
-    // Currently only T-1 and T-2 exist; duplicate to provide 4 valid images without 404s
-    const specialNames = ["T-1.png", "T-2.png", "T-1.png", "T-2.png"];
-    images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
   } else {
     images.push(`/images/collections/${folderName}/T-${i}.png`);
   }
