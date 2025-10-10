@@ -39,7 +39,7 @@ const Collections = () => {
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-10">
             <div>
-              <p className="text-sm sm:text-base text-muted-foreground">{products.length} products</p>
+              <p className="text-base sm:text-lg font-medium text-foreground">{products.length} products</p>
             </div>
 
             {/* Sort */}
@@ -47,12 +47,12 @@ const Collections = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-muted border border-border rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent uppercase tracking-wide cursor-pointer"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-card border-2 border-border rounded-md text-sm sm:text-base text-foreground font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent uppercase tracking-wide cursor-pointer hover:border-accent/50 transition-colors"
               >
-                <option value="featured">Sort By: Featured</option>
-                <option value="price-low">Sort By: Price Low to High</option>
-                <option value="price-high">Sort By: Price High to Low</option>
-                <option value="newest">Sort By: Newest</option>
+                <option value="featured">SORT BY: FEATURED</option>
+                <option value="price-low">SORT BY: PRICE LOW TO HIGH</option>
+                <option value="price-high">SORT BY: PRICE HIGH TO LOW</option>
+                <option value="newest">SORT BY: NEWEST</option>
               </select>
             </div>
           </div>

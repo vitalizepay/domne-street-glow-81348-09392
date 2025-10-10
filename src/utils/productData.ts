@@ -72,7 +72,7 @@ export const productFolders = [
 
 // Map folder names to their specific image counts
 const folderImageCounts: Record<string, number> = {
-  "black-t": 2,
+  "black-t": 4,
   "mauve-t": 4,
   "khaki-t": 4,
   "plane-black-t": 4,
