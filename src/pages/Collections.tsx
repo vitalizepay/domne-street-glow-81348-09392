@@ -23,7 +23,7 @@ const Collections = () => {
       <Navbar />
       
       {/* Breadcrumb */}
-      <div className="sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
+      <div className="relative z-40 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="container mx-auto px-6 py-3">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/" className="hover:text-accent transition-colors">Home</Link>

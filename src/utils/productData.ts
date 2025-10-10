@@ -105,15 +105,6 @@ for (let i = 1; i <= imageCount; i++) {
       "Gemini_Generated_Image_uytrt4uytrt4uytr.png"
     ];
     images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
-  } else if (folderName === "black-t") {
-    // Special case: second image filename doesn't follow T-2.png
-    const specialNames = [
-      "T-1.png",
-      "Gemini_Generated_Image_sjtby9sjtby9sjtb.png",
-      "T-3.png",
-      "T-4.png",
-    ];
-    images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
   } else {
     images.push(`/images/collections/${folderName}/T-${i}.png`);
   }
