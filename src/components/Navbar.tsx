@@ -2,13 +2,27 @@ import { useState, useEffect } from "react";
 import { Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { getAllProducts } from "@/utils/productData";
 import domineLogo from "@/assets/domine-logo.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const products = getAllProducts();
+  const filteredProducts = (searchQuery
+    ? products.filter((p) =>
+        [p.displayName, p.name, p.folderName]
+          .join(" ")
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      )
+    : products
+  ).slice(0, 8);
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -66,10 +80,8 @@ const Navbar = () => {
               variant="ghost" 
               size="icon" 
               className="hover:text-accent"
-              onClick={() => {
-                // TODO: Implement search functionality
-                console.log("Search clicked");
-              }}
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Search products"
             >
               <Search className="h-5 w-5" />
             </Button>
@@ -89,6 +101,47 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Search products</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Input
+              autoFocus
+              placeholder="Search tees..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="max-h-64 overflow-y-auto rounded-md border border-border divide-y divide-border">
+              {filteredProducts.length === 0 ? (
+                <p className="p-4 text-sm text-muted-foreground">No results found</p>
+              ) : (
+                filteredProducts.map((p) => (
+                  <button
+                    key={p.id}
+                    className="w-full text-left flex items-center gap-3 p-3 hover:bg-accent/20 transition-colors"
+                    onClick={() => {
+                      navigate(`/collections/${p.slug}`);
+                      setIsSearchOpen(false);
+                    }}
+                  >
+                    <img
+                      src={p.images[0]}
+                      alt={`${p.displayName} tee`}
+                      className="w-12 h-12 rounded object-cover border border-border"
+                    />
+                    <div>
+                      <p className="font-medium">{p.displayName}</p>
+                      <p className="text-xs text-muted-foreground">₹{p.price.toLocaleString('en-IN')}</p>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </nav>
   );
 };
