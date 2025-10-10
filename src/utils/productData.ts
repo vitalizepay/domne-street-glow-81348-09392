@@ -92,23 +92,32 @@ export const getProductFromFolder = (folderName: string): Product => {
   
   // Generate image paths - try different naming patterns
   const images: string[] = [];
-  for (let i = 1; i <= imageCount; i++) {
-    // Check for khaki-t which uses numbers without T- prefix
-    if (folderName === "khaki-t") {
-      images.push(`/images/collections/${folderName}/${i}.png`);
-    } else if (folderName === "plane-black-t") {
-      // Special case for plane-black-t which uses different filenames
-      const specialNames = [
-        "Gemini_Generated_Image_4vnbmr4vnbmr4vnb.png",
-        "Gemini_Generated_Image_55at8p55at8p55at.png",
-        "Gemini_Generated_Image_lmdgr6lmdgr6lmdg.png",
-        "Gemini_Generated_Image_uytrt4uytrt4uytr.png"
-      ];
-      images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
-    } else {
-      images.push(`/images/collections/${folderName}/T-${i}.png`);
-    }
+for (let i = 1; i <= imageCount; i++) {
+  // Check for khaki-t which uses numbers without T- prefix
+  if (folderName === "khaki-t") {
+    images.push(`/images/collections/${folderName}/${i}.png`);
+  } else if (folderName === "plane-black-t") {
+    // Special case for plane-black-t which uses different filenames
+    const specialNames = [
+      "Gemini_Generated_Image_4vnbmr4vnbmr4vnb.png",
+      "Gemini_Generated_Image_55at8p55at8p55at.png",
+      "Gemini_Generated_Image_lmdgr6lmdgr6lmdg.png",
+      "Gemini_Generated_Image_uytrt4uytrt4uytr.png"
+    ];
+    images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
+  } else if (folderName === "black-t") {
+    // Special case: second image filename doesn't follow T-2.png
+    const specialNames = [
+      "T-1.png",
+      "Gemini_Generated_Image_sjtby9sjtby9sjtb.png",
+      "T-3.png",
+      "T-4.png",
+    ];
+    images.push(`/images/collections/${folderName}/${specialNames[i - 1]}`);
+  } else {
+    images.push(`/images/collections/${folderName}/T-${i}.png`);
   }
+}
 
   return {
     id: slug,
