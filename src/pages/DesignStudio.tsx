@@ -1,9 +1,12 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 const DesignStudio = () => {
+  const navigate = useNavigate();
+  
   useEffect(() => {
     document.title = "Design Studio | DOMINE";
     
@@ -57,12 +60,33 @@ const DesignStudio = () => {
       {/* Studio Embed Section */}
       <section id="studio-embed" className="min-h-screen px-6 py-16">
         <div className="max-w-7xl mx-auto">
-          <iframe
-            src="/src/design/domine-design-studio-12321-23776/index.html"
-            className="w-full h-[85vh] rounded-2xl shadow-xl border border-white/10"
-            loading="lazy"
-            title="DOMINE Design Studio"
-          />
+          <div className="bg-neutral-900 rounded-2xl shadow-xl border border-white/10 p-12 text-center space-y-6">
+            <h2 className="text-3xl font-bold text-white">Design Studio Coming Soon</h2>
+            <p className="text-white/70 max-w-2xl mx-auto">
+              Our interactive T-shirt design studio is currently under development. 
+              Soon you'll be able to create custom designs with our powerful design tools.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 text-left">
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-white font-semibold mb-2">Custom Text</h3>
+                <p className="text-white/60 text-sm">Add your own text with various fonts and styles</p>
+              </div>
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-white font-semibold mb-2">Graphics & Templates</h3>
+                <p className="text-white/60 text-sm">Choose from hundreds of pre-made designs</p>
+              </div>
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-white font-semibold mb-2">AI Design Assistant</h3>
+                <p className="text-white/60 text-sm">Generate unique designs with AI</p>
+              </div>
+            </div>
+            <Button
+              onClick={() => navigate("/collections")}
+              className="mt-8 rounded-2xl px-8 py-6 text-lg font-semibold bg-white text-black hover:bg-white/90 hover:scale-105 transition-all duration-200"
+            >
+              Browse Our Collection
+            </Button>
+          </div>
         </div>
       </section>
 
