@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
-import domineLogo from "@/assets/domine-logo.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
+import { useHeaderMode } from "@/hooks/useHeaderMode";
 const Navbar = () => {
   const navigate = useNavigate();
+  const { scrolled } = useHeaderMode();
   const [cartCount, setCartCount] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,10 +36,12 @@ const Navbar = () => {
   }, []);
   const navItems = [
     { label: "HOME", path: "/" },
-    { label: "COLLECTIONS", path: "/collections" },
-    { label: "YOUR DESIGN", path: "/" },
+    { label: "SHOP", path: "/collections" },
+    { label: "DESIGN STUDIO", path: "/design-studio" },
     { label: "CONTACT", path: "/contact" },
   ];
+
+  const logoSrc = scrolled ? "/brand/logo-dark.png" : "/brand/logo-light.png";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -46,10 +49,16 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo - Top left */}
           <div 
-            className="flex items-center gap-2 cursor-pointer order-1"
+            className="flex items-center gap-2 cursor-pointer order-1 focus-within:ring-2 focus-within:ring-accent rounded"
             onClick={() => navigate("/")}
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && navigate("/")}
           >
-            <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
+            <img 
+              src={logoSrc} 
+              alt="DOMINE — premium tees" 
+              className="h-10 md:h-12 w-auto object-contain transition-all duration-200" 
+            />
           </div>
 
           {/* Navigation Links - Hidden on mobile */}
