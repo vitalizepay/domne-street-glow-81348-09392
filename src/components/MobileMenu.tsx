@@ -1,15 +1,5 @@
 import { Home, ShoppingBag, Palette, Mail } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
 import domineLogo from "@/assets/domine-logo.png";
 
 const menuItems = [
@@ -21,42 +11,37 @@ const menuItems = [
 
 export function MobileMenu() {
   return (
-    <Sidebar className="w-64">
-      <SidebarContent>
-        <div className="p-6 border-b border-border">
-          <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
+    <div className="flex flex-col h-full bg-background">
+      {/* Logo Header */}
+      <div className="p-6 border-b border-border">
+        <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
+      </div>
+      
+      {/* Navigation Menu */}
+      <nav className="flex-1 p-4">
+        <p className="px-4 py-2 text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+          Navigation
+        </p>
+        <div className="space-y-1 mt-2">
+          {menuItems.map((item) => (
+            <NavLink
+              key={item.title}
+              to={item.url}
+              end
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                  isActive
+                    ? "bg-accent text-background font-semibold"
+                    : "text-foreground hover:bg-accent/10"
+                }`
+              }
+            >
+              <item.icon className="h-5 w-5" />
+              <span>{item.title}</span>
+            </NavLink>
+          ))}
         </div>
-        
-        <SidebarGroup>
-          <SidebarGroupLabel className="px-4 py-2 text-xs uppercase tracking-wider text-muted-foreground">
-            Navigation
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      end
-                      className={({ isActive }) =>
-                        `flex items-center gap-3 px-4 py-3 transition-colors ${
-                          isActive
-                            ? "bg-accent/20 text-accent font-semibold"
-                            : "text-foreground hover:bg-accent/10"
-                        }`
-                      }
-                    >
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+      </nav>
+    </div>
   );
 }
