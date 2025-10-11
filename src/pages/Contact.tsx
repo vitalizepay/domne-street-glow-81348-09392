@@ -40,15 +40,27 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
+    // Create email content
+    const subject = encodeURIComponent(`Enquiry from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Phone: ${formData.phone || 'Not provided'}\n\n` +
+      `Message:\n${formData.message}`
+    );
+
+    // Open email client
+    window.location.href = `mailto:support@domine.in?subject=${subject}&body=${body}`;
+
+    // Show success message
     setTimeout(() => {
       toast({
-        title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
+        title: "Email client opened!",
+        description: "Please send the email from your email application.",
       });
       setFormData({ name: "", email: "", phone: "", message: "" });
       setIsSubmitting(false);
-    }, 1000);
+    }, 500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -72,55 +84,7 @@ const Contact = () => {
               Have questions about our products? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
             </p>
             
-            {/* Contact Cards - 3 columns without Karthick */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
-              {/* Email */}
-              <div className="flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl bg-card border-2 border-border hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/20 flex items-center justify-center mb-4 transition-transform hover:scale-110">
-                  <Mail className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
-                </div>
-                <h4 className="text-xs sm:text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
-                  Email
-                </h4>
-                <a 
-                  href="mailto:support@domine.in"
-                  className="text-foreground font-medium text-sm sm:text-base hover:text-accent transition-colors break-all px-2"
-                >
-                  support@domine.in
-                </a>
-              </div>
-
-              {/* Phone */}
-              <div className="flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl bg-card border-2 border-border hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/20 flex items-center justify-center mb-4 transition-transform hover:scale-110">
-                  <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
-                </div>
-                <h4 className="text-xs sm:text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
-                  Phone
-                </h4>
-                <a 
-                  href="tel:+919791881884"
-                  className="text-foreground font-medium text-base sm:text-lg hover:text-accent transition-colors"
-                >
-                  +91 97918 81884
-                </a>
-              </div>
-
-              {/* Location */}
-              <div className="flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl bg-card border-2 border-border hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/20 flex items-center justify-center mb-4 transition-transform hover:scale-110">
-                  <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
-                </div>
-                <h4 className="text-xs sm:text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
-                  Location
-                </h4>
-                <p className="text-foreground font-medium text-base sm:text-lg">
-                  Tirupur, Tamil Nadu
-                </p>
-              </div>
-            </div>
-
-            {/* Contact Form */}
+            {/* Contact Form - Now First */}
             <div className="bg-card border-2 border-border rounded-2xl p-6 sm:p-10 mb-12 sm:mb-16 hover:border-accent/50 transition-all duration-300">
               <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 text-center">
                 Send Us a Message
@@ -200,9 +164,62 @@ const Contact = () => {
                   disabled={isSubmitting}
                   className="w-full sm:w-auto sm:min-w-[200px] bg-accent hover:bg-accent/90 text-background font-bold text-sm tracking-widest px-8 py-6 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 min-h-[48px]"
                 >
-                  {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
+                  {isSubmitting ? "OPENING EMAIL..." : "SEND MESSAGE"}
                 </Button>
               </form>
+            </div>
+
+            {/* Contact Details - Now Below Form */}
+            <div className="mb-12 sm:mb-16">
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-6 text-center">
+                Other Ways to Reach Us
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {/* Email */}
+              <div className="flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl bg-card border-2 border-border hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/20 flex items-center justify-center mb-4 transition-transform hover:scale-110">
+                  <Mail className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
+                </div>
+                <h4 className="text-xs sm:text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                  Email
+                </h4>
+                <a 
+                  href="mailto:support@domine.in"
+                  className="text-foreground font-medium text-sm sm:text-base hover:text-accent transition-colors break-all px-2"
+                >
+                  support@domine.in
+                </a>
+              </div>
+
+              {/* Phone */}
+              <div className="flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl bg-card border-2 border-border hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/20 flex items-center justify-center mb-4 transition-transform hover:scale-110">
+                  <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
+                </div>
+                <h4 className="text-xs sm:text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                  Phone
+                </h4>
+                <a 
+                  href="tel:+919791881884"
+                  className="text-foreground font-medium text-base sm:text-lg hover:text-accent transition-colors"
+                >
+                  +91 97918 81884
+                </a>
+              </div>
+
+              {/* Location */}
+              <div className="flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl bg-card border-2 border-border hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/20 flex items-center justify-center mb-4 transition-transform hover:scale-110">
+                  <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
+                </div>
+                <h4 className="text-xs sm:text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                  Location
+                </h4>
+                <p className="text-foreground font-medium text-base sm:text-lg">
+                  Tirupur, Tamil Nadu
+                </p>
+              </div>
+              </div>
             </div>
 
             {/* Business Hours */}
