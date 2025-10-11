@@ -67,29 +67,49 @@ const ProductDetail = () => {
       image: product.images[0],
     });
 
-    // Redirect to WhatsApp with order details
-    const message = encodeURIComponent(
-      `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`,
-    );
-    window.open(`https://wa.me/+919791881884?text=${message}`, "_blank");
-
     toast({
-      title: "Redirecting to WhatsApp!",
+      title: "Added to cart!",
       description: `${product.name} (${selectedSize}) added to your cart`,
     });
   };
 
   const handleBuyNow = () => {
+    if (!selectedSize) {
+      toast({
+        title: "Please select a size",
+        description: "Choose a size before proceeding",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!user) {
       navigate("/auth", { state: { from: `/collections/${slug}` } });
       return;
     }
 
-    toast({
-      title: "Proceeding to checkout",
-      description: "Taking you to checkout...",
+    if (!product) return;
+
+    // Add to cart first
+    cartStore.addToCart({
+      productId: product.id,
+      productName: product.name,
+      productSlug: product.slug,
+      price: product.price,
+      size: selectedSize,
+      image: product.images[0],
     });
-    // TODO: Navigate to checkout page
+
+    // Redirect to WhatsApp with order details
+    const message = encodeURIComponent(
+      `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`,
+    );
+    window.open(`https://wa.me/919791881884?text=${message}`, "_blank");
+
+    toast({
+      title: "Redirecting to WhatsApp!",
+      description: "Complete your order via WhatsApp",
+    });
   };
 
   if (!product) {
