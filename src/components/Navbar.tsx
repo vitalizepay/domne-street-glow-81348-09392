@@ -67,33 +67,35 @@ const Navbar = () => {
           </div>
 
           {/* Icons */}
-          <div className="flex items-center gap-4 order-3">
+          <div className="flex items-center gap-2 sm:gap-4 order-3">
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:text-accent"
+              className="hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
               onClick={() => navigate("/auth")}
+              aria-label="User account"
             >
-              <User className="h-5 w-5" />
+              <User className="h-5 w-5 sm:h-6 sm:w-6" />
             </Button>
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:text-accent"
+              className="hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search products"
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-5 w-5 sm:h-6 sm:w-6" />
             </Button>
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:opacity-80 relative transition-opacity"
+              className="hover:opacity-80 hover:bg-accent/10 relative transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
               onClick={() => navigate("/cart")}
+              aria-label={`Shopping cart with ${cartCount} items`}
             >
-              <img src={cartIcon} alt="Cart" className="h-6 w-6 object-contain invert" />
+              <img src={cartIcon} alt="" className="h-6 w-6 object-contain invert" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
                   {cartCount}
                 </span>
               )}
@@ -102,38 +104,41 @@ const Navbar = () => {
         </div>
       </div>
       <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
-        <DialogContent className="sm:max-w-xl">
+        <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
-            <DialogTitle>Search products</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">Search products</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-4 flex-1 overflow-hidden flex flex-col">
             <Input
               autoFocus
               placeholder="Search tees..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              className="min-h-[44px]"
             />
-            <div className="max-h-64 overflow-y-auto rounded-md border border-border divide-y divide-border">
+            <div className="flex-1 overflow-y-auto rounded-md border border-border divide-y divide-border">
               {filteredProducts.length === 0 ? (
                 <p className="p-4 text-sm text-muted-foreground">No results found</p>
               ) : (
                 filteredProducts.map((p) => (
                   <button
                     key={p.id}
-                    className="w-full text-left flex items-center gap-3 p-3 hover:bg-accent/20 transition-colors"
+                    className="w-full text-left flex items-center gap-3 p-3 sm:p-4 hover:bg-accent/20 transition-all duration-300 active:bg-accent/30 min-h-[60px]"
                     onClick={() => {
                       navigate(`/collections/${p.slug}`);
                       setIsSearchOpen(false);
+                      setSearchQuery("");
                     }}
                   >
                     <img
                       src={p.images[0]}
                       alt={`${p.displayName} tee`}
-                      className="w-12 h-12 rounded object-cover border border-border"
+                      loading="lazy"
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded object-cover border border-border"
                     />
-                    <div>
-                      <p className="font-medium">{p.displayName}</p>
-                      <p className="text-xs text-muted-foreground">₹{p.price.toLocaleString('en-IN')}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm sm:text-base truncate">{p.displayName}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">₹{p.price.toLocaleString('en-IN')}</p>
                     </div>
                   </button>
                 ))

@@ -57,7 +57,7 @@ const HeroSlider = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 3000); // Changed to 3s as requested
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
@@ -77,12 +77,15 @@ const HeroSlider = () => {
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="relative h-screen w-full overflow-hidden touch-pan-y">
+      {/* Preload first image */}
+      <link rel="preload" as="image" href={slides[0].image} />
+      
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+          className={`absolute inset-0 transition-all duration-700 ease-out ${
             index === currentSlide
               ? "opacity-100 scale-100"
               : "opacity-0 scale-105"
@@ -94,7 +97,7 @@ const HeroSlider = () => {
             style={{
               backgroundImage: `url(${slide.image})`,
               transform: index === currentSlide ? "scale(1.05)" : "scale(1.1)",
-              transition: "transform 8s ease-out",
+              transition: "transform 6s ease-out",
             }}
           >
             {/* Gradient Overlay */}
@@ -126,7 +129,7 @@ const HeroSlider = () => {
                 <Button
                   size="lg"
                   onClick={() => navigate('/collections')}
-                  className="bg-accent hover:bg-accent/90 text-background font-bold text-sm tracking-widest px-8 py-6 rounded-full border-2 border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105"
+                  className="bg-accent hover:bg-accent/90 text-background font-bold text-xs sm:text-sm tracking-widest px-6 sm:px-8 py-5 sm:py-6 rounded-full border-2 border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 active:scale-95 min-h-[48px] w-full sm:w-auto"
                 >
                   {slide.cta}
                 </Button>
@@ -139,28 +142,28 @@ const HeroSlider = () => {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-10 bg-background/20 backdrop-blur-sm hover:bg-accent/80 text-foreground p-3 rounded-full transition-all duration-300 hover:scale-110"
+        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-10 bg-background/30 backdrop-blur-sm hover:bg-accent text-foreground p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-10 bg-background/20 backdrop-blur-sm hover:bg-accent/80 text-foreground p-3 rounded-full transition-all duration-300 hover:scale-110"
+        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-10 bg-background/30 backdrop-blur-sm hover:bg-accent text-foreground p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="Next slide"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-3">
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2 sm:gap-3 px-4">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`transition-all duration-300 rounded-full ${
+            className={`transition-all duration-300 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center ${
               index === currentSlide
-                ? "w-12 h-3 bg-accent"
+                ? "w-10 sm:w-12 h-3 bg-accent shadow-lg shadow-accent/50"
                 : "w-3 h-3 bg-foreground/30 hover:bg-foreground/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
