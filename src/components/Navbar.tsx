@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
-import { Search, User } from "lucide-react";
+import { Search, User, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
 import domineLogo from "@/assets/domine-logo.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
+import { MobileMenu } from "@/components/MobileMenu";
 const Navbar = () => {
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const products = getAllProducts();
   const filteredProducts = (searchQuery
     ? products.filter((p) =>
@@ -42,17 +45,44 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo - Top left */}
+          {/* Mobile Menu Button - Top Left */}
+          <div className="lg:hidden flex items-center gap-3 order-1">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:text-accent hover:bg-accent/10 transition-all duration-300 min-w-[44px] min-h-[44px]"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-64 p-0">
+                <MobileMenu />
+              </SheetContent>
+            </Sheet>
+            
+            {/* Logo on Mobile */}
+            <div 
+              className="flex items-center cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
+            </div>
+          </div>
+
+          {/* Logo - Desktop only */}
           <div 
-            className="flex items-center gap-2 cursor-pointer order-1"
+            className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
             <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
           </div>
 
-          {/* Navigation Links - Hidden on mobile */}
+          {/* Navigation Links - Desktop only */}
           <div className="hidden lg:flex items-center gap-6 xl:gap-8 order-2">
             {navItems.map((item) => (
               <button
