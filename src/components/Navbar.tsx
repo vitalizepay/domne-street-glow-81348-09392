@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
-import domineLogo from "@/assets/domine-logo_backup.png";
+import domineLogo from "@/assets/domine-logo-user.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
 import { MobileMenu } from "@/components/MobileMenu";
