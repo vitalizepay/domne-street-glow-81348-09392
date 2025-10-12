@@ -93,8 +93,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-      <div className="container mx-auto px-4 sm:px-6 py-4">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Mobile Menu Button - Top Left */}
           <div className="lg:hidden flex items-center gap-3 order-1">
@@ -119,7 +119,7 @@ const Navbar = () => {
               className="flex items-center cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
+              <img src={domineLogo} alt="DOMINE Logo" className="h-8 w-auto object-contain" />
             </div>
           </div>
 
@@ -128,7 +128,7 @@ const Navbar = () => {
             className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
-            <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-9 w-auto object-contain" />
           </div>
 
           {/* Navigation Links - Desktop only */}
@@ -137,10 +137,9 @@ const Navbar = () => {
               <button
                 key={item.label}
                 onClick={() => navigate(item.path)}
-                className="text-xs xl:text-sm font-semibold tracking-wide text-foreground/80 hover:text-accent transition-colors duration-300 relative group whitespace-nowrap"
+                className="text-xs xl:text-sm font-medium tracking-wider text-foreground hover:text-muted-foreground transition-colors duration-200 uppercase whitespace-nowrap"
               >
                 {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
               </button>
             ))}
           </div>
@@ -154,10 +153,10 @@ const Navbar = () => {
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
+                    className="hover:text-muted-foreground transition-colors min-w-[44px] min-h-[44px]"
                     aria-label="User menu"
                   >
-                    <User className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
@@ -178,33 +177,33 @@ const Navbar = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
+                className="hover:text-muted-foreground transition-colors min-w-[44px] min-h-[44px]"
                 onClick={() => navigate("/auth")}
                 aria-label="Login"
               >
-                <User className="h-5 w-5 sm:h-6 sm:w-6" />
+                <User className="h-5 w-5" />
               </Button>
             )}
             
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:text-accent hover:bg-accent/10 transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
+              className="hover:text-muted-foreground transition-colors min-w-[44px] min-h-[44px]"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search products"
             >
-              <Search className="h-5 w-5 sm:h-6 sm:w-6" />
+              <Search className="h-5 w-5" />
             </Button>
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:opacity-80 hover:bg-accent/10 relative transition-all duration-300 hover:scale-110 active:scale-95 min-w-[44px] min-h-[44px]"
+              className="hover:text-muted-foreground relative transition-colors min-w-[44px] min-h-[44px]"
               onClick={() => navigate("/cart")}
               aria-label={`Shopping cart with ${cartCount} items`}
             >
-              <img src={cartIcon} alt="" className="h-6 w-6 object-contain invert" />
+              <img src={cartIcon} alt="" className="h-6 w-6 object-contain" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
+                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
