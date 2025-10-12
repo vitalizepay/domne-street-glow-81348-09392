@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { getAllProducts } from "@/utils/productData";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 const FeaturedProducts = () => {
   const navigate = useNavigate();
@@ -16,7 +21,54 @@ const FeaturedProducts = () => {
           <p className="text-muted-foreground">Discover our latest collection</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        {/* Mobile Carousel */}
+        <div className="md:hidden">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2">
+              {featuredProducts.map((product) => (
+                <CarouselItem key={product.id} className="pl-2 basis-1/2">
+                  <div
+                    onClick={() => navigate(`/collections/${product.slug}`)}
+                    className="group cursor-pointer"
+                  >
+                    <div className="relative overflow-hidden rounded-lg bg-secondary mb-3 aspect-[3/4]">
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {product.originalPrice && (
+                        <div className="absolute top-3 left-3 bg-destructive text-destructive-foreground px-2 py-1 text-xs font-bold rounded">
+                          SALE
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="text-sm font-medium text-foreground mb-1 group-hover:underline">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <span className="text-base font-bold text-foreground">₹{product.price}</span>
+                      {product.originalPrice && (
+                        <span className="text-sm text-muted-foreground line-through">
+                          ₹{product.originalPrice}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+
+        {/* Desktop Grid */}
+        <div className="hidden md:grid grid-cols-4 gap-6">
           {featuredProducts.map((product) => (
             <div
               key={product.id}
