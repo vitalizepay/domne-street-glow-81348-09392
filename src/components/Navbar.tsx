@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
-import domineLogo from "@/assets/domine-logo-main.png";
+import domineLogo from "@/assets/domine-logo_backup.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -116,19 +116,19 @@ const Navbar = () => {
             
             {/* Logo on Mobile */}
             <div 
-              className="flex items-center cursor-pointer transition-opacity duration-200 hover:opacity-80"
+              className="flex items-center cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <img src={domineLogo} alt="DOMINE Logo" className="h-[30px] w-auto object-contain" style={{ maxWidth: '120px' }} />
+              <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
             </div>
           </div>
 
           {/* Logo - Desktop only */}
           <div 
-            className="hidden lg:flex items-center gap-2 cursor-pointer transition-opacity duration-200 hover:opacity-80 order-1"
+            className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
-            <img src={domineLogo} alt="DOMINE Logo" className="h-[40px] w-auto object-contain" style={{ maxWidth: '150px' }} />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
           </div>
 
           {/* Navigation Links - Desktop only */}
