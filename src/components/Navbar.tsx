@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
-import domineLogo from "@/assets/domine-logo.png";
+import domineLogo from "@/assets/domine-logo_backup.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -119,7 +119,7 @@ const Navbar = () => {
               className="flex items-center cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <img src={domineLogo} alt="DOMINE Logo" className="h-8 w-auto object-contain brightness-0 invert" />
+              <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
             </div>
           </div>
 
@@ -128,7 +128,7 @@ const Navbar = () => {
             className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
-            <img src={domineLogo} alt="DOMINE Logo" className="h-9 w-auto object-contain brightness-0 invert" />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
           </div>
 
           {/* Navigation Links - Desktop only */}
