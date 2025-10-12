@@ -119,7 +119,7 @@ const Navbar = () => {
               className="flex items-center cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <img src={domineLogo} alt="DOMINE Logo" className="h-8 w-auto object-contain" />
+              <img src={domineLogo} alt="DOMINE Logo" className="h-8 w-auto object-contain brightness-0 invert" />
             </div>
           </div>
 
@@ -128,7 +128,7 @@ const Navbar = () => {
             className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
-            <img src={domineLogo} alt="DOMINE Logo" className="h-9 w-auto object-contain" />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-9 w-auto object-contain brightness-0 invert" />
           </div>
 
           {/* Navigation Links - Desktop only */}
