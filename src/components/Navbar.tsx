@@ -119,7 +119,7 @@ const Navbar = () => {
               className="flex items-center cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <img src={domineLogo} alt="DOMINE Logo" className="h-8 w-auto object-contain" />
+              <img src={domineLogo} alt="DOMINE Logo" className="h-8 w-auto object-contain brightness-0 invert" />
             </div>
           </div>
 
@@ -128,7 +128,7 @@ const Navbar = () => {
             className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
-            <img src={domineLogo} alt="DOMINE Logo" className="h-9 w-auto object-contain" />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-9 w-auto object-contain brightness-0 invert" />
           </div>
 
           {/* Navigation Links - Desktop only */}
@@ -201,7 +201,7 @@ const Navbar = () => {
               onClick={() => navigate("/cart")}
               aria-label={`Shopping cart with ${cartCount} items`}
             >
-              <img src={cartIcon} alt="" className="h-6 w-6 object-contain" />
+              <img src={cartIcon} alt="" className="h-6 w-6 object-contain invert" />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
