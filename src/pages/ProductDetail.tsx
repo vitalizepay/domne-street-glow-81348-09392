@@ -164,8 +164,13 @@ const ProductDetail = () => {
                 }`}
                 onClick={() => setIsZoomed(!isZoomed)}
                 onError={(e) => {
-                  // Fallback to first valid image instead of placeholder
-                  e.currentTarget.src = product.images[0];
+                  const target = e.currentTarget;
+                  // Try other images in the array before giving up
+                  const currentSrc = target.src;
+                  const validImages = product.images.filter(img => img !== currentSrc);
+                  if (validImages.length > 0) {
+                    target.src = validImages[0];
+                  }
                 }}
               />
 
@@ -209,9 +214,7 @@ const ProductDetail = () => {
                     src={img}
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = product.images[0];
-                    }}
+                    loading="lazy"
                   />
                 </button>
               ))}
