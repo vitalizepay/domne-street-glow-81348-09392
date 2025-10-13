@@ -23,10 +23,10 @@ npm install
 ### 3. Start the Development Server
 
 ```bash
-npm start
+npx expo start
 ```
 
-This will start the Expo development server and show a QR code.
+**Important**: The first time you run this, it may take 1-2 minutes to start the Metro bundler. This is completely normal. Once started, you'll see a QR code in your terminal.
 
 ### 4. Run on Your Device
 

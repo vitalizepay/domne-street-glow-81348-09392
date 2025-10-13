@@ -35,19 +35,25 @@ A React Native mobile application built with Expo for the Domine e-commerce plat
 cd mobile-app
 ```
 
-2. Install dependencies:
+2. Install dependencies (if not already done):
 ```bash
 npm install
 ```
 
 3. Start the development server:
 ```bash
-npm start
+npx expo start
 ```
 
-4. Scan the QR code with:
-   - **iOS**: Camera app
-   - **Android**: Expo Go app
+**Note**: The first time you run `expo start`, it may take 1-2 minutes to start the Metro bundler. This is normal.
+
+4. Once started, you'll see a QR code in your terminal. Scan it with:
+   - **iOS**: Camera app (opens Expo Go automatically)
+   - **Android**: Expo Go app (scan within the app)
+
+5. Make sure you have **Expo Go** installed on your phone:
+   - [iOS App Store](https://apps.apple.com/app/expo-go/id982107779)
+   - [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
 ## Project Structure
 
