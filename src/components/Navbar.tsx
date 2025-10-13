@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
-import domineLogo from "@/assets/domine-logo.png";
+import domineLogo from "@/assets/domine-logo_backup.png";
 import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -30,7 +30,6 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const products = getAllProducts();
   const filteredProducts = (searchQuery
     ? products.filter((p) =>
@@ -50,14 +49,6 @@ const Navbar = () => {
     updateCartCount();
     window.addEventListener('cart-updated', updateCartCount);
     return () => window.removeEventListener('cart-updated', updateCartCount);
-  }, []);
-
-  // Scroll state for transparent header
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Authentication state management
@@ -102,14 +93,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? "bg-background/90 backdrop-blur-md shadow-md border-b border-border" 
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Mobile Menu Button - Top Left */}
           <div className="lg:hidden flex items-center gap-3 order-1">
@@ -134,12 +119,7 @@ const Navbar = () => {
               className="flex items-center cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <img 
-                src={domineLogo} 
-                alt="DOMINE" 
-                className="h-10 sm:h-12 w-auto select-none will-change-transform transition-transform duration-300 hover:scale-105" 
-                draggable="false"
-              />
+              <img src={domineLogo} alt="DOMINE Logo" className="h-10 w-auto object-contain" />
             </div>
           </div>
 
@@ -148,12 +128,7 @@ const Navbar = () => {
             className="hidden lg:flex items-center gap-2 cursor-pointer order-1"
             onClick={() => navigate("/")}
           >
-            <img 
-              src={domineLogo} 
-              alt="DOMINE" 
-              className="h-12 md:h-14 w-auto select-none will-change-transform transition-transform duration-300 hover:scale-105" 
-              draggable="false"
-            />
+            <img src={domineLogo} alt="DOMINE Logo" className="h-12 w-auto object-contain" />
           </div>
 
           {/* Navigation Links - Desktop only */}
@@ -219,23 +194,20 @@ const Navbar = () => {
             >
               <Search className="h-5 w-5" />
             </Button>
-            <button 
-              className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] hover:scale-110 transition-transform duration-200"
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:text-muted-foreground relative transition-colors min-w-[44px] min-h-[44px]"
               onClick={() => navigate("/cart")}
               aria-label={`Shopping cart with ${cartCount} items`}
             >
-              <img 
-                src={cartIcon} 
-                alt="Cart" 
-                className="h-7 w-7 sm:h-8 sm:w-8 transition-transform duration-200 hover:brightness-110" 
-                draggable="false"
-              />
+              <img src={cartIcon} alt="" className="h-6 w-6 object-contain" />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 min-w-[1.1rem] h-5 px-1.5 rounded-full bg-orange-500 text-white text-[10px] sm:text-xs font-semibold flex items-center justify-center leading-none">
+                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
