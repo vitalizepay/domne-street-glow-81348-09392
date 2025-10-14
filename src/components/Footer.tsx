@@ -41,14 +41,9 @@ const Footer = () => {
                 </NavLink>
               </li>
               <li>
-                <a href="#" className="text-sm text-background/80 hover:text-background transition-colors">
-                  Shipping Info
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm text-background/80 hover:text-background transition-colors">
-                  Returns
-                </a>
+                <NavLink to="/returns" className="text-sm text-background/80 hover:text-background transition-colors">
+                  Shipping & Returns
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -63,9 +58,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/privacy-policy" className="text-sm text-background/80 hover:text-background transition-colors">
                   Privacy Policy
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
