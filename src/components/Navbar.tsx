@@ -15,8 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { getAllProducts } from "@/utils/productData";
 import domineLogo from "@/assets/domine-logo.png";
+import cartIcon from "@/assets/cart-icon.png";
 import { cartStore } from "@/utils/cartStore";
-import CartIcon from "@/components/icons/CartIcon";
 import { MobileMenu } from "@/components/MobileMenu";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
@@ -197,13 +197,13 @@ const Navbar = () => {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:text-accent hover:bg-accent/10 relative transition-all duration-300 min-w-[44px] min-h-[44px]"
+              className="hover:text-muted-foreground relative transition-colors min-w-[44px] min-h-[44px]"
               onClick={() => navigate("/cart")}
               aria-label={`Shopping cart with ${cartCount} items`}
             >
-              <CartIcon className="h-5 w-5" />
+              <img src={cartIcon} alt="" className="h-6 w-6 object-contain" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-accent text-background text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-md">
+                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
