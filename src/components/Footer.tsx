@@ -53,9 +53,9 @@ const Footer = () => {
             <h3 className="font-semibold text-background mb-4 text-sm uppercase tracking-wide">About</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/about" className="text-sm text-background/80 hover:text-background transition-colors">
                   About Us
-                </a>
+                </NavLink>
               </li>
               <li>
                 <NavLink to="/privacy-policy" className="text-sm text-background/80 hover:text-background transition-colors">
