@@ -24,13 +24,22 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.domine.app"
+      "package": "com.domine.app",
+      "versionCode": 1,
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "supabaseUrl": "https://saiatfvyvyrhgkntxorh.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhaWF0ZnZ5dnlyaGdrbnR4b3JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAwMTE5MDQsImV4cCI6MjA3NTU4NzkwNH0.Oa2Q3SeXSAyKx7kJcvCWJ8VIN2DUVZohfMC_IngvHC8",
+      "eas": {
+        "projectId": "your-project-id"
+      }
+    }
   }
 }
