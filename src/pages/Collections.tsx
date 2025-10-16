@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -6,6 +6,19 @@ import SocialDock from "@/components/SocialDock";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronRight } from "lucide-react";
 import { getAllProducts } from "@/utils/productData";
+
+// Simple image preload helper shared across the page
+const preloaded = new Set<string>();
+const preloadImageLink = (url: string, priority: 'high' | 'low' = 'low') => {
+  if (!url || preloaded.has(url)) return;
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.href = url;
+  link.setAttribute('fetchpriority', priority);
+  document.head.appendChild(link);
+  preloaded.add(url);
+};
 
 const Collections = () => {
   const navigate = useNavigate();
@@ -69,7 +82,7 @@ const Collections = () => {
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <ProductCard product={product} navigate={navigate} />
+                <ProductCard product={product} navigate={navigate} index={index} />
               </div>
             ))}
           </div>
@@ -94,24 +107,44 @@ const Collections = () => {
 interface ProductCardProps {
   product: any;
   navigate: any;
+  index: number;
 }
 
-const ProductCard = ({ product, navigate }: ProductCardProps) => {
+const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const eager = index < 6; // first rows load eagerly
+
+  const doPreload = () => {
+    // Preload first 2 images; first with high priority
+    if (product?.images?.length) {
+      preloadImageLink(product.images[0], 'high');
+      if (product.images[1]) preloadImageLink(product.images[1], 'low');
+    }
+  };
+
+  const handleClick = () => {
+    doPreload();
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    navigate(`/collections/${product.slug}`);
+  };
 
   return (
     <div
       className="group cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
-      onClick={() => navigate(`/collections/${product.slug}`)}
-      onMouseEnter={() => setIsHovered(true)}
+      onClick={handleClick}
+      onMouseEnter={() => { setIsHovered(true); doPreload(); }}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={doPreload}
+      onPointerDown={doPreload}
     >
       <div className="relative overflow-hidden rounded-lg bg-muted mb-3 aspect-[3/4] transition-all duration-500 hover:shadow-xl hover:shadow-accent/10">
         {/* Primary Image */}
         <img
           src={product.images[0]}
           alt={`${product.displayName} - Front view`}
-          loading="lazy"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
           className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
             isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
           }`}
@@ -125,6 +158,8 @@ const ProductCard = ({ product, navigate }: ProductCardProps) => {
           src={product.images[1] || product.images[0]}
           alt={`${product.displayName} - Back view`}
           loading="lazy"
+          decoding="async"
+          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
           className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
             isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
           }`}

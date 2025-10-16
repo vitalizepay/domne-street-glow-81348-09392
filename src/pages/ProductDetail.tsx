@@ -195,6 +195,8 @@ const ProductDetail = () => {
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
                 loading="eager"
                 fetchPriority="high"
+                decoding="async"
+                sizes="(max-width:1024px) 100vw, 50vw"
                 className={`w-full h-full object-cover transition-transform duration-500 cursor-zoom-in ${
                   isZoomed ? "scale-150" : "hover:scale-110"
                 }`}
