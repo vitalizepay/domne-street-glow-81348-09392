@@ -5,10 +5,10 @@ const EssentialsSection = () => {
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
+      <div className="container mx-auto">
         <div 
           onClick={() => navigate("/essentials")}
-          className="relative overflow-hidden rounded-2xl cursor-pointer group h-[500px] bg-card shadow-lg hover:shadow-xl transition-all duration-300"
+          className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/4] bg-card shadow-lg hover:shadow-xl transition-all duration-300"
         >
           {/* Background Image */}
           <div className="absolute inset-0">
