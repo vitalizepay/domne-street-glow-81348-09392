@@ -5,6 +5,7 @@ import domineLogo from "@/assets/domine-logo.png";
 const menuItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "Collections", url: "/collections", icon: ShoppingBag },
+  { title: "Essentials", url: "/essentials", icon: ShoppingBag },
   { title: "Design Studio", url: "/design-studio", icon: Palette },
   { title: "Contact", url: "/contact", icon: Mail },
 ];

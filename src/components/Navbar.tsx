@@ -88,6 +88,7 @@ const Navbar = () => {
   const navItems = [
     { label: "HOME", path: "/" },
     { label: "COLLECTIONS", path: "/collections" },
+    { label: "ESSENTIALS", path: "/essentials" },
     { label: "YOUR DESIGN", path: "/" },
     { label: "CONTACT", path: "/contact" },
   ];
