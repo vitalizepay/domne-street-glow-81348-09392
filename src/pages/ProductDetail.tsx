@@ -232,7 +232,7 @@ const ProductDetail = () => {
           <div className="space-y-4">
             {/* Main Image */}
             <div 
-              className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group"
+              className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group touch-pan-y"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
