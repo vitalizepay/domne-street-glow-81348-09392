@@ -9,6 +9,10 @@ const menuItems = [
   { title: "Contact", url: "/contact", icon: Mail },
 ];
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
 export function MobileMenu() {
   return (
     <div className="flex flex-col h-full bg-background">
@@ -28,6 +32,7 @@ export function MobileMenu() {
               key={item.title}
               to={item.url}
               end
+              onClick={scrollToTop}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                   isActive

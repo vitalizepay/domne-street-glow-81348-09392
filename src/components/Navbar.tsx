@@ -92,6 +92,11 @@ const Navbar = () => {
     { label: "CONTACT", path: "/contact" },
   ];
 
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 py-3">
@@ -109,7 +114,7 @@ const Navbar = () => {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-64 p-0">
+              <SheetContent side="left" className="w-64 p-0 [&>button]:hidden">
                 <MobileMenu />
               </SheetContent>
             </Sheet>
@@ -136,7 +141,7 @@ const Navbar = () => {
             {navItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => navigate(item.path)}
+                onClick={() => handleNavClick(item.path)}
                 className="text-xs xl:text-sm font-medium tracking-wider text-foreground hover:text-muted-foreground transition-colors duration-200 uppercase whitespace-nowrap"
               >
                 {item.label}
