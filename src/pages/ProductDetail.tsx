@@ -80,6 +80,20 @@ const ProductDetail = () => {
     };
   }, [slug, product]);
 
+  // Preload adjacent images for snappier next/prev without state updates
+  useEffect(() => {
+    if (!product) return;
+    const len = product.images.length;
+    const preloadIdx = [
+      (selectedImage + 1) % len,
+      (selectedImage - 1 + len) % len,
+    ];
+    preloadIdx.forEach((i) => {
+      const img = new Image();
+      img.src = product.images[i];
+    });
+  }, [selectedImage, product]);
+
   const handleAddToCart = () => {
     if (!selectedSize) {
       toast({

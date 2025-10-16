@@ -70,6 +70,24 @@ export const productFolders = [
   "m-t-ab",
 ];
 
+// Helper: normalize, dedupe, and prioritize front images
+const normalizeImages = (images: string[]): string[] => {
+  // Dedupe by URL
+  const unique = Array.from(new Set(images.filter(Boolean)));
+
+  // Score filenames: front/main/1 before back/rear
+  const score = (p: string) => {
+    const name = p.toLowerCase();
+    if (/(front|main)/.test(name)) return 0;
+    if (/t-1\.|\/(1)\./.test(name)) return 1;
+    if (/(side)/.test(name)) return 2;
+    if (/(back|rear)/.test(name)) return 4;
+    return 3;
+  };
+
+  return unique.sort((a, b) => score(a) - score(b));
+};
+
 // Map folder names to their specific image counts
 const folderImageCounts: Record<string, number> = {
   "black-t": 4,
@@ -121,7 +139,7 @@ for (let i = 1; i <= imageCount; i++) {
     displayName: folderName.replace(/-t$/, "").replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
     price: 399,
     originalPrice: 1299,
-    images,
+    images: normalizeImages(images),
     colors,
   };
 };
