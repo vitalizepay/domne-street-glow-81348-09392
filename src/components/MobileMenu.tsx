@@ -13,7 +13,11 @@ const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-export function MobileMenu() {
+interface MobileMenuProps {
+  onClose?: () => void;
+}
+
+export function MobileMenu({ onClose }: MobileMenuProps) {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* Logo Header */}
@@ -51,7 +55,7 @@ export function MobileMenu() {
       {/* Close Button */}
       <div className="p-4 border-t border-border">
         <button
-          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))}
+          onClick={onClose}
           className="w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors py-2 opacity-60 hover:opacity-100"
         >
           Close

@@ -115,7 +115,7 @@ const Navbar = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0 [&>button]:hidden">
-                <MobileMenu />
+                <MobileMenu onClose={() => setIsMobileMenuOpen(false)} />
               </SheetContent>
             </Sheet>
             
