@@ -28,19 +28,21 @@ export const getFolderColors = (folderName: string): string[] => {
 
   if (name.includes("black")) return ["#000000"];
   if (name.includes("white")) return ["#FFFFFF"];
-  if (name.includes("mint-green")) return ["#98FF98"];
-  if (name.includes("olive-green")) return ["#6B8E23"];
-  if (name.includes("green")) return ["#228B22"];
-  if (name.includes("dusty-rose") || name.includes("mauve")) return ["#DCAE96"];
-  if (name.includes("dusty-blue")) return ["#6B9AC4"];
-  if (name.includes("light-blue")) return ["#87CEEB"];
-  if (name.includes("dark-gray") || name.includes("dark-grey") || name.includes("dark-shade-of-gray")) return ["#4A4A4A"];
-  if (name.includes("very-dark-shade-of-blue")) return ["#1a1a2e"];
-  if (name.includes("khaki")) return ["#C3B091"];
-  if (name.includes("rust")) return ["#B7410E"];
-  if (name.includes("tie-dye")) return ["#B7410E", "#000000"];
-  if (name.includes("g-t")) return ["#808080"];
-  if (name.includes("m-t-ab")) return ["#A0522D"];
+  if (name.includes("mint-green")) return ["#98D9A8"];
+  if (name.includes("olive-green")) return ["#6B7C5B"];
+  if (name.includes("green")) return ["#3A6B4A"];
+  if (name.includes("dusty-rose")) return ["#D4A5A5"];
+  if (name.includes("mauve")) return ["#B89B9F"];
+  if (name.includes("dusty-blue")) return ["#7B9FB8"];
+  if (name.includes("light-blue")) return ["#A8C5D9"];
+  if (name.includes("dark-gray") || name.includes("dark-grey")) return ["#3A3A3A"];
+  if (name.includes("dark-shade-of-gray")) return ["#4A4A4A"];
+  if (name.includes("very-dark-shade-of-blue")) return ["#1F2937"];
+  if (name.includes("khaki")) return ["#BDB09A"];
+  if (name.includes("rust")) return ["#A85A4A"];
+  if (name.includes("tie-dye")) return ["#8B5A3A", "#2C2420"];
+  if (name.includes("g-t")) return ["#6B6B6B"];
+  if (name.includes("m-t-ab")) return ["#7A4545"];
 
   return ["#000000"]; // default
 };
