@@ -36,6 +36,14 @@ const ProductDetail = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     
+    // Preload all product images for instant switching
+    if (product) {
+      product.images.forEach((imageSrc) => {
+        const img = new Image();
+        img.src = imageSrc;
+      });
+    }
+    
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
@@ -47,7 +55,7 @@ const ProductDetail = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [slug]);
+  }, [slug, product]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -162,13 +170,14 @@ const ProductDetail = () => {
               <img
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
+                loading="eager"
+                fetchPriority="high"
                 className={`w-full h-full object-cover transition-transform duration-500 cursor-zoom-in ${
                   isZoomed ? "scale-150" : "hover:scale-110"
                 }`}
                 onClick={() => setIsZoomed(!isZoomed)}
                 onError={(e) => {
                   const target = e.currentTarget;
-                  // Try other images in the array before giving up
                   const currentSrc = target.src;
                   const validImages = product.images.filter(img => img !== currentSrc);
                   if (validImages.length > 0) {
@@ -217,7 +226,7 @@ const ProductDetail = () => {
                     src={img}
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
-                    loading="lazy"
+                    loading="eager"
                   />
                 </button>
               ))}
@@ -390,6 +399,7 @@ const ProductDetail = () => {
                     src={relatedProduct.images[0]}
                     alt={relatedProduct.displayName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg";
                     }}
