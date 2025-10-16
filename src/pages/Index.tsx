@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroSlider from "@/components/HeroSlider";
 import CategorySection from "@/components/CategorySection";
+import EssentialsSection from "@/components/EssentialsSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import TrustBadges from "@/components/TrustBadges";
 import SocialDock from "@/components/SocialDock";
@@ -17,6 +18,7 @@ const Index = () => {
       <Navbar />
       <HeroSlider />
       <CategorySection />
+      <EssentialsSection />
       <FeaturedProducts />
       <TrustBadges />
       <SocialDock />
