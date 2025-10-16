@@ -47,6 +47,16 @@ export function MobileMenu() {
           ))}
         </div>
       </nav>
+      
+      {/* Close Button */}
+      <div className="p-4 border-t border-border">
+        <button
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))}
+          className="w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors py-2 opacity-60 hover:opacity-100"
+        >
+          Close
+        </button>
+      </div>
     </div>
   );
 }

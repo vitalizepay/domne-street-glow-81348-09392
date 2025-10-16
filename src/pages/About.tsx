@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import PromoBanner from "@/components/PromoBanner";
 import Footer from "@/components/Footer";
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <PromoBanner />
@@ -233,7 +238,7 @@ const About = () => {
             </h2>
             <div className="space-y-2 text-base sm:text-lg text-muted-foreground">
               <p>📧 <a href="mailto:support@domine.in" className="text-foreground hover:text-accent transition-colors">support@domine.in</a></p>
-              <p>📞 <a href="tel:+919791881884" className="text-foreground hover:text-accent transition-colors">+91 97918 81884</a></p>
+              <p>📞 <a href="tel:+919994104442" className="text-foreground hover:text-accent transition-colors">+91 99941 04442</a></p>
               <p>📍 Tirupur, Tamil Nadu, India</p>
               <p>🌐 <a href="https://www.domine.in" className="text-foreground hover:text-accent transition-colors">www.domine.in</a></p>
             </div>

@@ -24,7 +24,7 @@ const socialLinks = [
   {
     name: "WhatsApp",
     icon: MessageCircle,
-    url: "https://wa.me/919791881884?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees.",
+    url: "https://wa.me/919994104442?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees.",
     ariaLabel: "Chat with us on WhatsApp",
   },
 ];

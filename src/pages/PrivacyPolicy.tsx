@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import PromoBanner from "@/components/PromoBanner";
 import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <PromoBanner />
@@ -11,12 +16,12 @@ const PrivacyPolicy = () => {
         <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
         <p className="text-sm text-muted-foreground mb-8">Effective Date: 15-October-2025</p>
         <p className="text-sm text-muted-foreground mb-8">Website: www.domine.in</p>
-        <p className="mb-8">Operated by: Domine Lifestyle Pvt. Ltd. ("We", "Our", "Us")</p>
+        <p className="mb-8">Operated by: 2D Creation ("We", "Our", "Us")</p>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Domine Lifestyle Pvt. Ltd. ("Domine") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, and safeguard your information when you visit our website www.domine.in, interact with our services, or make purchases online or in-store.
+            2D Creation ("Domine") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, and safeguard your information when you visit our website www.domine.in, interact with our services, or make purchases online or in-store.
           </p>
           <p className="text-muted-foreground leading-relaxed mt-4">
             By using our website or providing your personal data, you agree to this Privacy Policy and consent to our processing of your data as outlined below.

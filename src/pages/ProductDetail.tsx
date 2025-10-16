@@ -9,6 +9,7 @@ import SocialDock from "@/components/SocialDock";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Check, Droplets, Wind, Sparkles, Shirt, MessageCircle, ChevronLeft } from "lucide-react";
 import { getProductBySlug, getRandomProducts } from "@/utils/productData";
+import SizeGuide from "@/components/SizeGuide";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -33,6 +34,8 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
@@ -44,7 +47,7 @@ const ProductDetail = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [slug]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -104,7 +107,7 @@ const ProductDetail = () => {
     const message = encodeURIComponent(
       `Hi DOMINE! I would like to order:\n\nProduct: ${product.name}\nColor: ${product.displayName}\nSize: ${selectedSize}\nPrice: ₹${product.price}\n\nFind my order details`,
     );
-    window.open(`https://wa.me/919791881884?text=${message}`, "_blank");
+    window.open(`https://wa.me/919994104442?text=${message}`, "_blank");
 
     toast({
       title: "Redirecting to WhatsApp!",
@@ -282,6 +285,9 @@ const ProductDetail = () => {
               </div>
             </div>
 
+            {/* Size Guide */}
+            <SizeGuide />
+
             {/* Action Buttons */}
             <div className="flex gap-4 pt-4">
               <Button
@@ -322,13 +328,39 @@ const ProductDetail = () => {
               </ul>
             </div>
 
-            {/* Deals & Offers */}
+            {/* Fabric & Process */}
+            <div className="border-2 border-border p-6 rounded-lg bg-muted/30">
+              <h3 className="font-bold mb-4 text-lg">Fabric & Process</h3>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-accent">•</span>
+                  <span>100% Premium Combed Cotton - super soft and durable</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent">•</span>
+                  <span>Bio-washed for extra softness and minimal shrinkage</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent">•</span>
+                  <span>Pre-shrunk to maintain perfect fit after wash</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent">•</span>
+                  <span>Eco-friendly water-based prints that last longer</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Quality You Can Feel */}
             <div className="border-2 border-accent p-6 rounded-lg bg-accent/5">
-              <h3 className="font-bold mb-4 text-lg">Deals & Offers</h3>
-              <ul className="space-y-2">
+              <h3 className="font-bold mb-4 text-lg">Quality You Can Feel</h3>
+              <p className="text-sm leading-relaxed">
+                Premium fabrics, clean fits, and honest pricing — built for everyday wear. Every DOMINE tee is crafted with attention to detail and designed to last.
+              </p>
+              <ul className="space-y-2 mt-4">
                 <li className="flex items-start gap-2">
                   <span className="text-xl">🎁</span>
-                  <span className="text-sm">Free Gift with every order</span>
+                  <span className="text-sm">Free gift on orders above ₹999</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-xl">🏷️</span>
@@ -336,7 +368,7 @@ const ProductDetail = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-xl">💬</span>
-                  <span className="text-sm">WhatsApp Enquiry: +91 96001 10557</span>
+                  <span className="text-sm">WhatsApp Enquiry: +91 99941 04442</span>
                 </li>
               </ul>
             </div>
@@ -375,7 +407,7 @@ const ProductDetail = () => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/919600110557?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
+        href="https://wa.me/919994104442?text=Hi%20DOMINE!%20I'm%20interested%20in%20men's%20tees."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-[9998] bg-[#25D366] hover:bg-[#20BA5A] text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"

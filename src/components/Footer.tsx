@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 import domineLogo from "@/assets/domine-logo.png";
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
 const Footer = () => {
   return (
     <footer className="bg-[hsl(200,100%,62%)] border-t border-border py-12">
@@ -19,12 +23,12 @@ const Footer = () => {
             <h3 className="font-semibold text-background mb-4 text-sm uppercase tracking-wide">Shop</h3>
             <ul className="space-y-2">
               <li>
-                <NavLink to="/collections" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/collections" onClick={scrollToTop} className="text-sm text-background/80 hover:text-background transition-colors">
                   All Products
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/collections" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/collections" onClick={scrollToTop} className="text-sm text-background/80 hover:text-background transition-colors">
                   Best Sellers
                 </NavLink>
               </li>
@@ -36,12 +40,12 @@ const Footer = () => {
             <h3 className="font-semibold text-background mb-4 text-sm uppercase tracking-wide">Customer Care</h3>
             <ul className="space-y-2">
               <li>
-                <NavLink to="/contact" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/contact" onClick={scrollToTop} className="text-sm text-background/80 hover:text-background transition-colors">
                   Contact Us
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/returns" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/returns" onClick={scrollToTop} className="text-sm text-background/80 hover:text-background transition-colors">
                   Shipping & Returns
                 </NavLink>
               </li>
@@ -53,12 +57,12 @@ const Footer = () => {
             <h3 className="font-semibold text-background mb-4 text-sm uppercase tracking-wide">About</h3>
             <ul className="space-y-2">
               <li>
-                <NavLink to="/about" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/about" onClick={scrollToTop} className="text-sm text-background/80 hover:text-background transition-colors">
                   About Us
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/privacy-policy" className="text-sm text-background/80 hover:text-background transition-colors">
+                <NavLink to="/privacy-policy" onClick={scrollToTop} className="text-sm text-background/80 hover:text-background transition-colors">
                   Privacy Policy
                 </NavLink>
               </li>
@@ -69,6 +73,9 @@ const Footer = () => {
         <div className="border-t border-background/20 pt-8 text-center">
           <p className="text-background/80 text-sm">
             © {new Date().getFullYear()} DOMINE. All rights reserved.
+          </p>
+          <p className="text-background/70 text-xs mt-2">
+            Operated by 2D Creation
           </p>
         </div>
       </div>
