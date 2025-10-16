@@ -210,7 +210,7 @@ const ProductDetail = () => {
 
       {/* Breadcrumb */}
       <div className="sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
-        <div className="container mx-auto px-6 py-3">
+        <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/" className="hover:text-accent transition-colors">
               Home
@@ -225,9 +225,9 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 sm:px-6 py-12">
         {/* Product Details */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 mb-20 max-w-full">
           {/* Left - Image Carousel */}
           <div className="space-y-4">
             {/* Main Image */}
@@ -326,7 +326,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Right - Product Info */}
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0">
             <div>
               <h1 className="text-3xl lg:text-4xl font-bold mb-2">{product.name}</h1>
               <div className="flex items-center gap-3">
@@ -338,7 +338,7 @@ const ProductDetail = () => {
             {/* Color Options */}
             <div>
               <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Color: {product.displayName}</h3>
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-wrap">
                 {product.colors.map((color, index) => (
                   <div
                     key={index}
@@ -353,7 +353,7 @@ const ProductDetail = () => {
             {/* Size Selection */}
             <div>
               <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide">Select Size</h3>
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-wrap">
                 {sizes.map((size) => (
                   <button
                     key={size}
