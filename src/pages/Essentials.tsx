@@ -6,100 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cartStore } from "@/utils/cartStore";
-
-interface EssentialProduct {
-  id: string;
-  name: string;
-  color: string;
-  price: number;
-  image: string;
-  features: string[];
-  fabric: string;
-}
-
-const essentialProducts: EssentialProduct[] = [
-  {
-    id: "essential-teal",
-    name: "Basic Round Neck T-Shirt",
-    color: "Teal",
-    price: 399,
-    image: "/images/essentials/teal-basic-tee.png",
-    features: ["100% Cotton", "Super Soft", "HEM with HD Print", "Clean surface", "Light Weight"],
-    fabric: "100% Cotton"
-  },
-  {
-    id: "essential-biscuit",
-    name: "Basic Round Neck T-Shirt",
-    color: "Biscuit",
-    price: 399,
-    image: "/images/essentials/biscuit-basic-tee.png",
-    features: ["100% Cotton", "Super Soft", "HEM with Print & DTF Material", "Clean surface", "Light Weight"],
-    fabric: "100% Cotton"
-  },
-  {
-    id: "essential-maroon",
-    name: "Basic Round Neck T-Shirt",
-    color: "Maroon",
-    price: 399,
-    image: "/images/essentials/maroon-basic-tee.png",
-    features: ["100% Cotton", "Super Soft", "HEM with Print and Vinyl", "Clean surface", "Light Weight"],
-    fabric: "100% Cotton"
-  },
-  {
-    id: "essential-sage-green",
-    name: "Basic Round Neck T-Shirt",
-    color: "Sage Green",
-    price: 399,
-    image: "/images/essentials/sage-green-basic-tee.png",
-    features: ["100% Cotton", "Super Soft", "HEM with Structural HD Print", "Clean surface", "Light Weight"],
-    fabric: "100% Cotton"
-  },
-  {
-    id: "essential-peach",
-    name: "Basic Round Neck T-Shirt",
-    color: "Peach",
-    price: 399,
-    image: "/images/essentials/peach-basic-tee.png",
-    features: ["100% Cotton", "Super Soft", "HEM with Puff Print", "Clean surface", "Light Weight"],
-    fabric: "100% Cotton"
-  },
-  {
-    id: "essential-black-plain",
-    name: "Basic Plain T-Shirt",
-    color: "Black",
-    price: 399,
-    image: "/images/essentials/black-plain-tee.png",
-    features: ["100% Premium Cotton", "Super Soft", "Clean surface"],
-    fabric: "100% Premium Cotton"
-  },
-  {
-    id: "essential-white-plain",
-    name: "Basic Plain T-Shirt",
-    color: "White",
-    price: 399,
-    image: "/images/essentials/white-plain-tee.png",
-    features: ["100% Premium Cotton", "Super Soft", "Clean surface"],
-    fabric: "100% Premium Cotton"
-  },
-  {
-    id: "essential-black-puff",
-    name: "Basic Printed T-Shirt with Puff Print",
-    color: "Black",
-    price: 399,
-    image: "/images/essentials/black-puff-print-tee.png",
-    features: ["100% Premium Cotton", "Super Soft", "Clean surface"],
-    fabric: "100% Premium Cotton"
-  },
-  {
-    id: "essential-grey-hd",
-    name: "Basic Printed T-Shirt with HD Print",
-    color: "Grey",
-    price: 399,
-    image: "/images/essentials/grey-hd-print-tee.png",
-    features: ["100% Premium Cotton", "Super Soft", "Clean surface"],
-    fabric: "100% Premium Cotton"
-  }
-];
+import { getAllProducts, Product } from "@/utils/productData";
 
 const Essentials = () => {
   const navigate = useNavigate();
@@ -108,7 +15,27 @@ const Essentials = () => {
 
   const sizes = ["S", "M", "L", "XL", "XXL"];
 
-  const handleAddToCart = (product: EssentialProduct) => {
+  // Get specific products from collections for essentials
+  const allProducts = getAllProducts();
+  
+  // Map essential products based on the PDF requirements
+  const essentialProductSlugs = [
+    "olive-green-t",      // Sage Green
+    "khaki-t",            // Biscuit
+    "m-t-ab",             // Maroon/Brown
+    "mint-green-t",       // Mint/Teal
+    "dusty-rose-t",       // Peach
+    "plane-black-t",      // Black Plain
+    "plane-white-t",      // White Plain
+    "black-t",            // Black Printed
+    "dark-grey",          // Grey
+  ];
+
+  const essentialProducts = allProducts.filter(p => 
+    essentialProductSlugs.includes(p.slug)
+  );
+
+  const handleAddToCart = (product: Product) => {
     const selectedSize = selectedSizes[product.id];
     if (!selectedSize) {
       toast({
@@ -121,16 +48,16 @@ const Essentials = () => {
 
     cartStore.addToCart({
       productId: product.id,
-      productName: `${product.name} - ${product.color}`,
-      productSlug: product.id,
+      productName: product.name,
+      productSlug: product.slug,
       price: product.price,
       size: selectedSize,
-      image: product.image,
+      image: product.images[0],
     });
 
     toast({
       title: "Added to cart",
-      description: `${product.name} (${product.color}) - Size ${selectedSize}`,
+      description: `${product.displayName} - Size ${selectedSize}`,
     });
   };
 
@@ -155,31 +82,42 @@ const Essentials = () => {
               className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
             >
               {/* Product Image */}
-              <div className="aspect-[3/4] bg-muted relative overflow-hidden group">
+              <div 
+                className="aspect-[3/4] bg-muted relative overflow-hidden group cursor-pointer"
+                onClick={() => navigate(`/collections/${product.slug}`)}
+              >
                 <img
-                  src={product.image}
-                  alt={`${product.name} - ${product.color}`}
+                  src={product.images[0]}
+                  alt={product.displayName}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
+                <div className="absolute top-4 right-4 bg-accent text-background px-3 py-1 rounded-full text-sm font-semibold">
+                  70% OFF
+                </div>
               </div>
 
               {/* Product Info */}
               <div className="p-6 space-y-4">
                 <div>
                   <h3 className="font-semibold text-lg">{product.name}</h3>
-                  <p className="text-sm text-muted-foreground">{product.color}</p>
+                  <p className="text-sm text-muted-foreground">{product.displayName}</p>
                 </div>
 
-                {/* Features */}
-                <ul className="text-sm space-y-1">
-                  {product.features.map((feature, idx) => (
-                    <li key={idx} className="text-muted-foreground">• {feature}</li>
+                {/* Color Dots */}
+                <div className="flex gap-2">
+                  {product.colors.map((color, idx) => (
+                    <div
+                      key={idx}
+                      className="w-6 h-6 rounded-full border-2 border-border"
+                      style={{ backgroundColor: color }}
+                    />
                   ))}
-                </ul>
+                </div>
 
                 {/* Price */}
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-bold">₹{product.price}</span>
+                  <span className="text-lg text-muted-foreground line-through">₹{product.originalPrice}</span>
                 </div>
 
                 {/* Size Selection */}
