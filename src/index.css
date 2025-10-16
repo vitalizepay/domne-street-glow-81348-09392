@@ -100,7 +100,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans overflow-x-hidden w-full;
     font-family: 'Poppins', sans-serif;
   }
 }
@@ -196,6 +196,8 @@ All colors MUST be HSL.
   /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   /* Optimize image rendering */
