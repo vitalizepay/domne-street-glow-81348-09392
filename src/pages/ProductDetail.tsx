@@ -265,17 +265,17 @@ const ProductDetail = () => {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity shadow-lg z-10"
+                    className="absolute left-3 lg:left-2 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity shadow-lg z-10 border border-border/50"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft className="h-6 w-6 text-accent" />
+                    <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-accent" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity shadow-lg z-10"
+                    className="absolute right-3 lg:right-2 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity shadow-lg z-10 border border-border/50"
                     aria-label="Next image"
                   >
-                    <ChevronRight className="h-6 w-6 text-accent" />
+                    <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-accent" />
                   </button>
                 </>
               )}
