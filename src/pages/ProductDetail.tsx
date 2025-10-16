@@ -21,6 +21,8 @@ const ProductDetail = () => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [user, setUser] = useState<any>(null);
   const preloadLinksRef = useRef<HTMLLinkElement[]>([]);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
  
   const nextImage = () => {
     if (product) {
@@ -32,6 +34,32 @@ const ProductDetail = () => {
     if (product) {
       setSelectedImage((prev) => (prev - 1 + product.images.length) % product.images.length);
     }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextImage();
+    }
+    if (isRightSwipe) {
+      prevImage();
+    }
+
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   useEffect(() => {
@@ -203,7 +231,12 @@ const ProductDetail = () => {
           {/* Left - Image Carousel */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group">
+            <div 
+              className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <img
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
@@ -232,14 +265,14 @@ const ProductDetail = () => {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity shadow-lg z-10"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="h-6 w-6 text-accent" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity shadow-lg z-10"
                     aria-label="Next image"
                   >
                     <ChevronRight className="h-6 w-6 text-accent" />
