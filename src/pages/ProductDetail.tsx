@@ -20,7 +20,6 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [decodedMap, setDecodedMap] = useState<Record<string, boolean>>({});
   const preloadLinksRef = useRef<HTMLLinkElement[]>([]);
  
   const nextImage = () => {
@@ -38,7 +37,7 @@ const ProductDetail = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Preload all product images with high/low priority and pre-decode for instant switching
+    // Preload all product images with high/low priority for instant switching
     if (product) {
       // Clean any previous links
       preloadLinksRef.current.forEach((l) => {
@@ -53,22 +52,9 @@ const ProductDetail = () => {
         link.rel = "preload";
         link.as = "image";
         link.href = imageSrc;
-        // Use attribute to avoid TS lib.dom mismatches
         link.setAttribute("fetchpriority", idx === 0 ? "high" : "low");
         document.head.appendChild(link);
         preloadLinksRef.current.push(link);
-
-        const img = new Image();
-        img.decoding = "async";
-        img.src = imageSrc;
-        img.onload = () =>
-          setDecodedMap((prev) => ({ ...prev, [imageSrc]: true }));
-        if (img.decode) {
-          img
-            .decode()
-            .then(() => setDecodedMap((prev) => ({ ...prev, [imageSrc]: true })))
-            .catch(() => {});
-        }
       });
     }
 
@@ -93,21 +79,6 @@ const ProductDetail = () => {
       preloadLinksRef.current = [];
     };
   }, [slug, product]);
-
-  // Ensure currently selected image is decoded (in case user clicks fast)
-  useEffect(() => {
-    if (!product) return;
-    const current = product.images[selectedImage];
-    if (!decodedMap[current]) {
-      const img = new Image();
-      img.decoding = "async";
-      img.src = current;
-      img.onload = () => setDecodedMap((prev) => ({ ...prev, [current]: true }));
-      if (img.decode) {
-        img.decode().then(() => setDecodedMap((prev) => ({ ...prev, [current]: true }))).catch(() => {});
-      }
-    }
-  }, [selectedImage, product, decodedMap]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -224,7 +195,6 @@ const ProductDetail = () => {
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
                 loading="eager"
                 fetchPriority="high"
-                decoding="async"
                 className={`w-full h-full object-cover transition-transform duration-500 cursor-zoom-in ${
                   isZoomed ? "scale-150" : "hover:scale-110"
                 }`}
