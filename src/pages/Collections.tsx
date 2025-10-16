@@ -27,6 +27,12 @@ const Collections = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Preload first 12 products' first two images in the background
+    const primaries = sortedProducts.slice(0, 12);
+    primaries.forEach((p, i) => {
+      if (p?.images?.[0]) preloadImageLink(p.images[0], i < 4 ? 'high' : 'low');
+      if (p?.images?.[1]) preloadImageLink(p.images[1], 'low');
+    });
   }, []);
 
   const sortedProducts = [...products].sort((a, b) => {
@@ -113,6 +119,7 @@ interface ProductCardProps {
 const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const eager = index < 6; // first rows load eagerly
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const doPreload = () => {
     // Preload first 2 images; first with high priority
@@ -122,6 +129,21 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
     }
   };
 
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          doPreload();
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    obs.observe(cardRef.current);
+    return () => obs.disconnect();
+  }, []);
+
   const handleClick = () => {
     doPreload();
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -130,6 +152,7 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
 
   return (
     <div
+      ref={cardRef}
       className="group cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
       onClick={handleClick}
       onMouseEnter={() => { setIsHovered(true); doPreload(); }}
@@ -144,6 +167,8 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
           alt={`${product.displayName} - Front view`}
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
+          width={960}
+          height={1280}
           sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
           className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
             isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
@@ -159,6 +184,8 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
           alt={`${product.displayName} - Back view`}
           loading="lazy"
           decoding="async"
+          width={960}
+          height={1280}
           sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
           className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
             isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-110'

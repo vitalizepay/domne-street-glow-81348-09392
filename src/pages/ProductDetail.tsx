@@ -196,6 +196,8 @@ const ProductDetail = () => {
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
+                width={1200}
+                height={1600}
                 sizes="(max-width:1024px) 100vw, 50vw"
                 className={`w-full h-full object-cover transition-transform duration-500 cursor-zoom-in ${
                   isZoomed ? "scale-150" : "hover:scale-110"
@@ -251,6 +253,8 @@ const ProductDetail = () => {
                     src={img}
                     alt={`${product.displayName} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
+                    width={320}
+                    height={320}
                     loading="lazy"
                   />
                 </button>
@@ -424,6 +428,8 @@ const ProductDetail = () => {
                     src={relatedProduct.images[0]}
                     alt={relatedProduct.displayName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    width={600}
+                    height={800}
                     loading="lazy"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg";
