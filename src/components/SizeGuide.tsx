@@ -19,37 +19,37 @@ export default function SizeGuide() {
           <tbody>
             <tr className="border-t border-border">
               <td className="px-4 py-3 font-medium">S</td>
-              <td className="px-4 py-3">37</td>
+              <td className="px-4 py-3">37.0</td>
               <td className="px-4 py-3">16.5</td>
               <td className="px-4 py-3">26.8</td>
-              <td className="px-4 py-3">7</td>
+              <td className="px-4 py-3">7.0</td>
             </tr>
             <tr className="bg-muted/30 border-t border-border">
               <td className="px-4 py-3 font-medium">M</td>
               <td className="px-4 py-3">38.6</td>
-              <td className="px-4 py-3">17.0</td>
+              <td className="px-4 py-3">17.1</td>
               <td className="px-4 py-3">27.6</td>
               <td className="px-4 py-3">7.5</td>
             </tr>
             <tr className="border-t border-border">
               <td className="px-4 py-3 font-medium">L</td>
               <td className="px-4 py-3">40.2</td>
-              <td className="px-4 py-3">17.5</td>
+              <td className="px-4 py-3">17.7</td>
               <td className="px-4 py-3">28.3</td>
-              <td className="px-4 py-3">8</td>
+              <td className="px-4 py-3">8.0</td>
             </tr>
             <tr className="bg-muted/30 border-t border-border">
               <td className="px-4 py-3 font-medium">XL</td>
               <td className="px-4 py-3">43.3</td>
-              <td className="px-4 py-3">18.0</td>
+              <td className="px-4 py-3">18.7</td>
               <td className="px-4 py-3">29.1</td>
               <td className="px-4 py-3">8.3</td>
             </tr>
             <tr className="border-t border-border">
               <td className="px-4 py-3 font-medium">XXL</td>
               <td className="px-4 py-3">46.5</td>
-              <td className="px-4 py-3">18.5</td>
-              <td className="px-4 py-3">30</td>
+              <td className="px-4 py-3">19.7</td>
+              <td className="px-4 py-3">30.0</td>
               <td className="px-4 py-3">8.7</td>
             </tr>
           </tbody>

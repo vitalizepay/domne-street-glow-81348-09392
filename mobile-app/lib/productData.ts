@@ -13,21 +13,28 @@ const generateSlug = (folderName: string): string => {
 
 const getFolderColors = (folderName: string): string[] => {
   const name = folderName.toLowerCase();
+  
+  // Essentials collection colors based on PDF
+  if (name.includes('g-t')) return ['#008080']; // Teal
+  if (name.includes('mauve')) return ['#E5D4B5']; // Biscuit
+  if (name.includes('m-t-ab')) return ['#800000']; // Maroon
+  if (name.includes('mint-green')) return ['#77B05D']; // Sage Green
+  if (name.includes('dusty-rose')) return ['#FFDAB9']; // Peach
+  if (name.includes('khaki')) return ['#C3B091']; // Khaki
+  if (name.includes('dark-gray') || name.includes('dark-grey')) return ['#808080']; // Grey
+  
+  // Other collections
   if (name.includes('black')) return ['#000000'];
   if (name.includes('white')) return ['#FFFFFF'];
-  if (name.includes('mint-green')) return ['#98FF98'];
-  if (name.includes('olive-green')) return ['#6B8E23'];
-  if (name.includes('green')) return ['#228B22'];
-  if (name.includes('dusty-rose') || name.includes('mauve')) return ['#DCAE96'];
-  if (name.includes('dusty-blue')) return ['#6B9AC4'];
-  if (name.includes('light-blue')) return ['#87CEEB'];
-  if (name.includes('dark-gray') || name.includes('dark-grey') || name.includes('dark-shade-of-gray')) return ['#4A4A4A'];
-  if (name.includes('very-dark-shade-of-blue')) return ['#1a1a2e'];
-  if (name.includes('khaki')) return ['#C3B091'];
-  if (name.includes('rust')) return ['#B7410E'];
-  if (name.includes('tie-dye')) return ['#B7410E', '#000000'];
-  if (name.includes('g-t')) return ['#808080'];
-  if (name.includes('m-t-ab')) return ['#A0522D'];
+  if (name.includes('olive-green')) return ['#6B7C5B'];
+  if (name.includes('green')) return ['#3A6B4A'];
+  if (name.includes('dusty-blue')) return ['#7B9FB8'];
+  if (name.includes('light-blue')) return ['#A8C5D9'];
+  if (name.includes('dark-shade-of-gray')) return ['#4A4A4A'];
+  if (name.includes('very-dark-shade-of-blue')) return ['#1F2937'];
+  if (name.includes('rust')) return ['#A85A4A'];
+  if (name.includes('tie-dye')) return ['#8B5A3A', '#2C2420'];
+  
   return ['#000000'];
 };
 
@@ -91,12 +98,35 @@ export const getProductFromFolder = (folderName: string): Product => {
     }
   }
 
+  const getDisplayName = (folder: string): string => {
+    const cleanName = folder.replace(/-t$/, '').replace(/-/g, ' ');
+    return cleanName.replace(/\b\w/g, (l) => l.toUpperCase());
+  };
+
+  const getProductName = (folder: string): string => {
+    const essentialsMapping: Record<string, string> = {
+      'khaki-t': 'DOMINE Essentials – Basic Round Neck T-Shirt – Khaki',
+      'black-t': 'DOMINE Essentials – Basic Plain T-Shirt – Black',
+      'white-t': 'DOMINE Essentials – Basic Plain T-Shirt – White',
+      'plane-white-t': 'DOMINE Essentials – Basic Plain T-Shirt – White',
+      'plane-black-t': 'DOMINE Essentials – Basic Printed T-Shirt with Puff Print – Black',
+      'dark-grey': 'DOMINE Essentials – Basic Printed T-Shirt with HD Print – Grey',
+      'm-t-ab': 'DOMINE Essentials – Basic Round Neck T-Shirt – Maroon',
+      'dusty-rose-t': 'DOMINE Essentials – Basic Round Neck T-Shirt – Peach',
+      'mint-green-t': 'DOMINE Essentials – Basic Round Neck T-Shirt – Sage Green',
+      'g-t': 'DOMINE Essentials – Basic Round Neck T-Shirt – Teal',
+      'mauve-t': 'DOMINE Essentials – Basic Round Neck T-Shirt – Biscuit',
+    };
+
+    return essentialsMapping[folder] || "Men's Cut & Sew HD Print T-Shirt";
+  };
+
   return {
     id: slug,
     slug,
-    name: "Men's Cut & Sew HD Print T-Shirt",
+    name: getProductName(folderName),
     folderName,
-    displayName: folderName.replace(/-t$/, '').replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+    displayName: getDisplayName(folderName),
     price: 399,
     originalPrice: 1299,
     images,

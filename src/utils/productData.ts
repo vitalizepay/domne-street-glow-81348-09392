@@ -26,23 +26,26 @@ export const generateSlug = (folderName: string): string => {
 export const getFolderColors = (folderName: string): string[] => {
   const name = folderName.toLowerCase();
 
+  // Essentials collection colors based on PDF
+  if (name.includes("g-t")) return ["#008080"]; // Teal
+  if (name.includes("mauve")) return ["#E5D4B5"]; // Biscuit
+  if (name.includes("m-t-ab")) return ["#800000"]; // Maroon
+  if (name.includes("mint-green")) return ["#77B05D"]; // Sage Green
+  if (name.includes("dusty-rose")) return ["#FFDAB9"]; // Peach
+  if (name.includes("khaki")) return ["#C3B091"]; // Khaki
+  if (name.includes("dark-gray") || name.includes("dark-grey")) return ["#808080"]; // Grey
+  
+  // Other collections
   if (name.includes("black")) return ["#000000"];
   if (name.includes("white")) return ["#FFFFFF"];
-  if (name.includes("mint-green")) return ["#98D9A8"];
   if (name.includes("olive-green")) return ["#6B7C5B"];
   if (name.includes("green")) return ["#3A6B4A"];
-  if (name.includes("dusty-rose")) return ["#D4A5A5"];
-  if (name.includes("mauve")) return ["#B89B9F"];
   if (name.includes("dusty-blue")) return ["#7B9FB8"];
   if (name.includes("light-blue")) return ["#A8C5D9"];
-  if (name.includes("dark-gray") || name.includes("dark-grey")) return ["#3A3A3A"];
   if (name.includes("dark-shade-of-gray")) return ["#4A4A4A"];
   if (name.includes("very-dark-shade-of-blue")) return ["#1F2937"];
-  if (name.includes("khaki")) return ["#BDB09A"];
   if (name.includes("rust")) return ["#A85A4A"];
   if (name.includes("tie-dye")) return ["#8B5A3A", "#2C2420"];
-  if (name.includes("g-t")) return ["#6B6B6B"];
-  if (name.includes("m-t-ab")) return ["#7A4545"];
 
   return ["#000000"]; // default
 };
@@ -133,12 +136,38 @@ for (let i = 1; i <= imageCount; i++) {
   }
 }
 
+  // Map folder names to display names
+  const getDisplayName = (folder: string): string => {
+    const cleanName = folder.replace(/-t$/, "").replace(/-/g, " ");
+    // Capitalize words
+    return cleanName.replace(/\b\w/g, (l) => l.toUpperCase());
+  };
+
+  // Map folder names to product names (for Essentials collection products)
+  const getProductName = (folder: string): string => {
+    const essentialsMapping: Record<string, string> = {
+      "khaki-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Khaki",
+      "black-t": "DOMINE Essentials – Basic Plain T-Shirt – Black",
+      "white-t": "DOMINE Essentials – Basic Plain T-Shirt – White",
+      "plane-white-t": "DOMINE Essentials – Basic Plain T-Shirt – White",
+      "plane-black-t": "DOMINE Essentials – Basic Printed T-Shirt with Puff Print – Black",
+      "dark-grey": "DOMINE Essentials – Basic Printed T-Shirt with HD Print – Grey",
+      "m-t-ab": "DOMINE Essentials – Basic Round Neck T-Shirt – Maroon",
+      "dusty-rose-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Peach",
+      "mint-green-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Sage Green",
+      "g-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Teal",
+      "mauve-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Biscuit",
+    };
+
+    return essentialsMapping[folder] || "Men's Cut & Sew HD Print T-Shirt";
+  };
+
   return {
     id: slug,
     slug,
-    name: "Men's Cut & Sew HD Print T-Shirt",
+    name: getProductName(folderName),
     folderName,
-    displayName: folderName.replace(/-t$/, "").replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
+    displayName: getDisplayName(folderName),
     price: 399,
     originalPrice: 1299,
     images: normalizeImages(images),

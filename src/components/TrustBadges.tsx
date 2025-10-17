@@ -17,17 +17,12 @@ const TrustBadges = () => {
       title: "Easy Returns",
       description: "7 days return policy",
     },
-    {
-      icon: Gift,
-      title: "Free Gift",
-      description: "With every order",
-    },
   ];
 
   return (
     <section className="py-12 px-4 bg-secondary/50">
       <div className="container mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {badges.map((badge) => (
             <div key={badge.title} className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-accent-foreground mb-3">

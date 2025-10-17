@@ -20,15 +20,15 @@ const Essentials = () => {
   
   // Map essential products based on the PDF requirements
   const essentialProductSlugs = [
-    "olive-green-t",      // Sage Green
-    "khaki-t",            // Biscuit
-    "m-t-ab",             // Maroon/Brown
-    "mint-green-t",       // Mint/Teal
+    "g-t",                // Teal
+    "mauve-t",            // Biscuit
+    "m-t-ab",             // Maroon
+    "mint-green-t",       // Sage Green
     "dusty-rose-t",       // Peach
-    "plane-black-t",      // Black Plain
+    "black-t",            // Black Plain
     "plane-white-t",      // White Plain
-    "black-t",            // Black Printed
-    "dark-grey",          // Grey
+    "plane-black-t",      // Black Puff Print
+    "dark-grey",          // Grey HD Print
   ];
 
   const essentialProducts = allProducts.filter(p => 

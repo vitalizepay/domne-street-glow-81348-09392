@@ -313,9 +313,6 @@ const ProductDetail = () => {
               {[
                 { icon: Shirt, text: "Super Soft" },
                 { icon: Wind, text: "100% Premium Cotton" },
-                { icon: Droplets, text: "Quick Dry" },
-                { icon: Droplets, text: "Moisture Wicking" },
-                { icon: Sparkles, text: "Anti-Wrinkle" },
               ].map((feature, index) => (
                 <div key={index} className="flex items-center gap-3 p-3 bg-muted rounded-lg">
                   <feature.icon className="h-5 w-5 text-accent flex-shrink-0" />
@@ -392,26 +389,6 @@ const ProductDetail = () => {
               </Button>
             </div>
 
-            {/* Key Features */}
-            <div className="bg-muted p-6 rounded-lg">
-              <h3 className="font-bold mb-4 text-lg">Key Features</h3>
-              <ul className="space-y-2">
-                {[
-                  "Breathable",
-                  "Flex-Fit Technology",
-                  "Stretchable",
-                  "Quick Dry",
-                  "Moisture Wicking",
-                  "Anti-Wrinkle",
-                  "Tailored Fit for Trendy Style",
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-accent flex-shrink-0" />
-                    <span className="text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Fabric & Process */}
             <div className="border-2 border-border p-6 rounded-lg bg-muted/30">
@@ -443,10 +420,6 @@ const ProductDetail = () => {
                 Premium fabrics, clean fits, and honest pricing — built for everyday wear. Every DOMINE tee is crafted with attention to detail and designed to last.
               </p>
               <ul className="space-y-2 mt-4">
-                <li className="flex items-start gap-2">
-                  <span className="text-xl">🎁</span>
-                  <span className="text-sm">Free gift on orders above ₹999</span>
-                </li>
                 <li className="flex items-start gap-2">
                   <span className="text-xl">🏷️</span>
                   <span className="text-sm">First Order: 15% OFF via UPI</span>
