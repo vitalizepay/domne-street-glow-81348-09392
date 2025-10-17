@@ -98,6 +98,9 @@ export const getProductFromFolder = (folderName: string): Product => {
     }
   }
 
+  // Remove duplicates and ensure unique images
+  const uniqueImages = Array.from(new Set(images));
+
   const getDisplayName = (folder: string): string => {
     const cleanName = folder.replace(/-t$/, '').replace(/-/g, ' ');
     return cleanName.replace(/\b\w/g, (l) => l.toUpperCase());
@@ -129,7 +132,7 @@ export const getProductFromFolder = (folderName: string): Product => {
     displayName: getDisplayName(folderName),
     price: 399,
     originalPrice: 1299,
-    images,
+    images: uniqueImages,
     colors,
   };
 };

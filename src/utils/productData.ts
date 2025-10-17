@@ -77,17 +77,18 @@ export const productFolders = [
 
 // Helper: normalize, dedupe, and prioritize front images
 const normalizeImages = (images: string[]): string[] => {
-  // Dedupe by URL
+  // Dedupe by URL - remove exact duplicates
   const unique = Array.from(new Set(images.filter(Boolean)));
 
-  // Score filenames: front/main/1 before back/rear
+  // Score filenames: front/T-1 first, then side, then back
   const score = (p: string) => {
     const name = p.toLowerCase();
-    if (/(front|main)/.test(name)) return 0;
-    if (/t-1\.|\/(1)\./.test(name)) return 1;
-    if (/(side)/.test(name)) return 2;
-    if (/(back|rear)/.test(name)) return 4;
-    return 3;
+    if (/t-1\.png|\/1\.png/.test(name)) return 0; // Front image
+    if (/t-2\.png|\/2\.png/.test(name)) return 1; // Side image
+    if (/t-3\.png|\/3\.png/.test(name)) return 2; // Another side
+    if (/t-4\.png|\/4\.png/.test(name)) return 3; // Back image
+    if (/t-5\.png|\/5\.png/.test(name)) return 4; // Extra image
+    return 5;
   };
 
   return unique.sort((a, b) => score(a) - score(b));
