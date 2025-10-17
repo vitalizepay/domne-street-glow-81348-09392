@@ -20,6 +20,24 @@ const preloadImageLink = (url: string, priority: 'high' | 'low' = 'low') => {
   preloaded.add(url);
 };
 
+// Helper to prefer a front-facing image by filename pattern
+const pickFrontImage = (images: string[] = []): string => {
+  if (!images?.length) return '/placeholder.svg';
+  const patterns = [
+    /(front|t-1\.png|\/1\.png)$/i, // common front
+    /t-3\.png|\/3\.png/i,          // alternate front/sitting front
+    /t-2\.png|\/2\.png/i,          // side as fallback
+    /t-4\.png|\/4\.png/i,
+    /t-5\.png|\/5\.png/i,
+  ];
+  const lower = images.map((s) => s.toLowerCase());
+  for (const p of patterns) {
+    const idx = lower.findIndex((s) => p.test(s));
+    if (idx !== -1) return images[idx];
+  }
+  return images[0];
+};
+
 const Collections = () => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("featured");
@@ -117,16 +135,12 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   const eager = index < 6; // first rows load eagerly
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const frontSrc = pickFrontImage(product?.images);
 
   const doPreload = () => {
-    // Preload first 2 images; first with high priority
-    if (product?.images?.length) {
-      preloadImageLink(product.images[0], 'high');
-      if (product.images[1]) preloadImageLink(product.images[1], 'low');
-    }
+    if (frontSrc) preloadImageLink(frontSrc, index < 4 ? 'high' : 'low');
   };
 
   useEffect(() => {
@@ -155,43 +169,21 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
       ref={cardRef}
       className="group cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
       onClick={handleClick}
-      onMouseEnter={() => { setIsHovered(true); doPreload(); }}
-      onMouseLeave={() => setIsHovered(false)}
       onTouchStart={doPreload}
       onPointerDown={doPreload}
     >
       <div className="relative overflow-hidden rounded-lg bg-muted mb-3 aspect-[3/4] transition-all duration-500 hover:shadow-xl hover:shadow-accent/10">
-        {/* Primary Image */}
         <img
-          src={product.images[0]}
+          src={frontSrc}
           alt={`${product.displayName} - Front view`}
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
           width={960}
           height={1280}
           sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
-            isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
-          }`}
+          className="absolute inset-0 w-full h-full object-cover"
           onError={(e) => {
             e.currentTarget.src = '/placeholder.svg';
-          }}
-        />
-        
-        {/* Hover Image */}
-        <img
-          src={product.images[1] || product.images[0]}
-          alt={`${product.displayName} - Back view`}
-          loading="lazy"
-          decoding="async"
-          width={960}
-          height={1280}
-          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
-            isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
-          }`}
-          onError={(e) => {
-            e.currentTarget.src = product.images[0];
           }}
         />
       </div>
