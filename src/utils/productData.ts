@@ -80,15 +80,16 @@ const normalizeImages = (images: string[]): string[] => {
   // Dedupe by URL - remove exact duplicates
   const unique = Array.from(new Set(images.filter(Boolean)));
 
-  // Score filenames: front/T-1 first, then side, then back
+  // Score filenames: explicit order Front -> Side -> Lifestyle -> Extra -> Back (back last)
   const score = (p: string) => {
     const name = p.toLowerCase();
-    if (/t-1\.png|\/1\.png/.test(name)) return 0; // Front image
-    if (/t-2\.png|\/2\.png/.test(name)) return 1; // Side image
-    if (/t-3\.png|\/3\.png/.test(name)) return 2; // Another side
-    if (/t-4\.png|\/4\.png/.test(name)) return 3; // Back image
+    if (/front/.test(name)) return 0;
+    if (/t-1\.png|\/1\.png/.test(name)) return 1; // Front image
+    if (/t-2\.png|\/2\.png/.test(name)) return 2; // Side image
+    if (/t-3\.png|\/3\.png/.test(name)) return 3; // Lifestyle / other angle
     if (/t-5\.png|\/5\.png/.test(name)) return 4; // Extra image
-    return 5;
+    if (/t-4\.png|\/4\.png|back/.test(name)) return 5; // Back image LAST
+    return 6;
   };
 
   return unique.sort((a, b) => score(a) - score(b));
@@ -147,17 +148,17 @@ for (let i = 1; i <= imageCount; i++) {
   // Map folder names to product names (for Essentials collection products)
   const getProductName = (folder: string): string => {
     const essentialsMapping: Record<string, string> = {
-      "khaki-t": "Basic Round Neck T-Shirt – Khaki",
-      "black-t": "Basic Plain T-Shirt – Black",
-      "white-t": "Basic Plain T-Shirt – White",
-      "plane-white-t": "Basic Plain T-Shirt – White",
-      "plane-black-t": "Basic Printed T-Shirt with Puff Print – Black",
-      "dark-grey": "Basic Printed T-Shirt with HD Print – Grey",
-      "m-t-ab": "Basic Round Neck T-Shirt – Maroon",
-      "dusty-rose-t": "Basic Round Neck T-Shirt – Peach",
-      "mint-green-t": "Basic Round Neck T-Shirt – Sage Green",
-      "g-t": "Basic Round Neck T-Shirt – Teal",
-      "mauve-t": "Basic Round Neck T-Shirt – Biscuit",
+      "khaki-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Khaki",
+      "black-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Black",
+      "white-t": "DOMINE Essentials – Basic Round Neck T-Shirt – White",
+      "plane-white-t": "DOMINE Essentials – Basic Plain T-Shirt – White",
+      "plane-black-t": "DOMINE Essentials – Basic Printed T-Shirt with Puff Print – Black",
+      "dark-grey": "DOMINE Essentials – Basic Printed T-Shirt with HD Print – Grey",
+      "m-t-ab": "DOMINE Essentials – Basic Round Neck T-Shirt – Maroon",
+      "dusty-rose-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Peach",
+      "mint-green-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Sage Green",
+      "g-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Teal",
+      "mauve-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Biscuit",
     };
 
     return essentialsMapping[folder] || "Men's Cut & Sew HD Print T-Shirt";

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -16,6 +16,23 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const product = slug ? getProductBySlug(slug) : null;
+  // Order & dedupe images: Front → Side → Lifestyle → Extra → Back
+  const images = useMemo(() => {
+    const list = Array.from(new Set((product?.images ?? []).filter(Boolean)));
+    const score = (p: string) => {
+      const name = p.toLowerCase();
+      if (/front/.test(name)) return 0;
+      if (/t-1\.png|\/1\.png/.test(name)) return 1;
+      if (/t-2\.png|\/2\.png/.test(name)) return 2;
+      if (/t-3\.png|\/3\.png/.test(name)) return 3;
+      if (/t-5\.png|\/5\.png/.test(name)) return 4;
+      if (/t-4\.png|\/4\.png|back/.test(name)) return 5;
+      return 6;
+    };
+    return list.sort((a,b) => score(a) - score(b)).slice(0,5);
+  }, [product]);
+  const imagesLength = images.length;
+
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedImage, setSelectedImage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -24,17 +41,17 @@ const ProductDetail = () => {
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
  
-  const nextImage = () => {
-    if (product) {
-      setSelectedImage((prev) => (prev + 1) % product.images.length);
-    }
-  };
+const nextImage = () => {
+  if (imagesLength > 1) {
+    setSelectedImage((prev) => (prev + 1) % imagesLength);
+  }
+};
 
-  const prevImage = () => {
-    if (product) {
-      setSelectedImage((prev) => (prev - 1 + product.images.length) % product.images.length);
-    }
-  };
+const prevImage = () => {
+  if (imagesLength > 1) {
+    setSelectedImage((prev) => (prev - 1 + imagesLength) % imagesLength);
+  }
+};
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -65,17 +82,15 @@ const ProductDetail = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Preload all product images with high/low priority for instant switching
-    if (product) {
+// Preload ordered images with front HIGH priority
+    if (imagesLength) {
       // Clean any previous links
       preloadLinksRef.current.forEach((l) => {
-        try {
-          document.head.removeChild(l);
-        } catch {}
+        try { document.head.removeChild(l); } catch {}
       });
       preloadLinksRef.current = [];
 
-      product.images.forEach((imageSrc, idx) => {
+      images.forEach((imageSrc, idx) => {
         const link = document.createElement("link");
         link.rel = "preload";
         link.as = "image";
@@ -110,16 +125,16 @@ const ProductDetail = () => {
 
   // Preload adjacent images for snappier next/prev without state updates
   useEffect(() => {
-    if (!product) return;
-    const len = product.images.length;
-    const preloadIdx = [
-      (selectedImage + 1) % len,
-      (selectedImage - 1 + len) % len,
-    ];
-    preloadIdx.forEach((i) => {
-      const img = new Image();
-      img.src = product.images[i];
-    });
+if (!imagesLength) return;
+const len = imagesLength;
+const preloadIdx = [
+  (selectedImage + 1) % len,
+  (selectedImage - 1 + len) % len,
+];
+preloadIdx.forEach((i) => {
+  const img = new Image();
+  img.src = images[i];
+});
   }, [selectedImage, product]);
 
   const handleAddToCart = () => {
@@ -134,14 +149,14 @@ const ProductDetail = () => {
 
     if (!product) return;
 
-    cartStore.addToCart({
-      productId: product.id,
-      productName: product.name,
-      productSlug: product.slug,
-      price: product.price,
-      size: selectedSize,
-      image: product.images[0],
-    });
+cartStore.addToCart({
+  productId: product.id,
+  productName: product.name,
+  productSlug: product.slug,
+  price: product.price,
+  size: selectedSize,
+  image: images[0],
+});
 
     toast({
       title: "Added to cart!",
@@ -167,14 +182,14 @@ const ProductDetail = () => {
     if (!product) return;
 
     // Add to cart first
-    cartStore.addToCart({
-      productId: product.id,
-      productName: product.name,
-      productSlug: product.slug,
-      price: product.price,
-      size: selectedSize,
-      image: product.images[0],
-    });
+cartStore.addToCart({
+  productId: product.id,
+  productName: product.name,
+  productSlug: product.slug,
+  price: product.price,
+  size: selectedSize,
+  image: images[0],
+});
 
     // Redirect to WhatsApp with order details
     const message = encodeURIComponent(
@@ -238,11 +253,11 @@ const ProductDetail = () => {
               onTouchEnd={handleTouchEnd}
             >
               <img
-                src={product.images[selectedImage]}
-                alt={`${product.displayName} - View ${selectedImage + 1}`}
-                loading={selectedImage === 0 ? "eager" : "lazy"}
-                fetchPriority={selectedImage === 0 ? "high" : "low"}
-                decoding="async"
+src={images[selectedImage]}
+                 alt={`${product.displayName} - View ${selectedImage + 1}`}
+                 loading={selectedImage === 0 ? "eager" : "lazy"}
+                 fetchPriority={selectedImage === 0 ? "high" : "low"}
+                 decoding="async"
                 width={1200}
                 height={1600}
                 sizes="(max-width:1024px) 100vw, 50vw"
@@ -282,30 +297,30 @@ const ProductDetail = () => {
 
               {/* Image Counter */}
               <div className="absolute bottom-4 right-4 bg-background/80 px-3 py-1 rounded-full text-sm">
-                {selectedImage + 1} / {product.images.length}
+{selectedImage + 1} / {imagesLength}
               </div>
             </div>
 
             {/* Thumbnails */}
             <div className="grid grid-cols-4 gap-4">
-              {product.images.map((img, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`aspect-square bg-muted rounded-lg overflow-hidden border-2 transition-all ${
-                    selectedImage === index ? "border-accent" : "border-transparent hover:border-border"
-                  }`}
-                >
-                  <img
-                    src={img}
-                    alt={`${product.displayName} thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    width={320}
-                    height={320}
-                    loading="lazy"
-                  />
-                </button>
-              ))}
+{images.map((img, index) => (
+  <button
+    key={index}
+    onClick={() => setSelectedImage(index)}
+    className={`aspect-square bg-muted rounded-lg overflow-hidden border-2 transition-all ${
+      selectedImage === index ? "border-accent" : "border-transparent hover:border-border"
+    }`}
+  >
+    <img
+      src={img}
+      alt={`${product.displayName} thumbnail ${index + 1}`}
+      className="w-full h-full object-cover"
+      width={320}
+      height={320}
+      loading="lazy"
+    />
+  </button>
+))}
             </div>
 
             {/* Feature Icons */}

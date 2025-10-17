@@ -23,20 +23,38 @@ const preloadImageLink = (url: string, priority: 'high' | 'low' = 'low') => {
 // Helper to prefer a front-facing image by filename pattern
 const pickFrontImage = (images: string[] = []): string => {
   if (!images?.length) return '/placeholder.svg';
-  // Prefer clear front, then side, then other angles; keep BACK (T-4) last
+  const lower = images.map((s) => s.toLowerCase());
+  // Avoid back poses explicitly
+  const isBack = (s: string) => /t-4\.png|\/4\.png|back/.test(s);
+  // Priority: explicit front -> T-1/1 -> T-2 -> T-3 -> T-5 -> anything not back
   const patterns = [
-    /(front|t-1\.png|\/1\.png)$/i,
+    /front/,
+    /t-1\.png|\/1\.png/i,
     /t-2\.png|\/2\.png/i,
     /t-3\.png|\/3\.png/i,
     /t-5\.png|\/5\.png/i,
-    /t-4\.png|\/4\.png/i,
   ];
-  const lower = images.map((s) => s.toLowerCase());
   for (const p of patterns) {
+    const idx = lower.findIndex((s) => p.test(s) && !isBack(s));
+    if (idx !== -1) return images[idx];
+  }
+  const firstNotBack = lower.findIndex((s) => !isBack(s));
+  return images[firstNotBack !== -1 ? firstNotBack : 0];
+};
+
+// Helper to pick a side image for hover
+const pickSideImage = (images: string[] = []): string | null => {
+  if (!images?.length) return null;
+  const lower = images.map((s) => s.toLowerCase());
+  const candidates = [
+    /t-2\.png|\/2\.png/i,
+    /t-3\.png|\/3\.png/i,
+  ];
+  for (const p of candidates) {
     const idx = lower.findIndex((s) => p.test(s));
     if (idx !== -1) return images[idx];
   }
-  return images[0];
+  return null;
 };
 
 const Collections = () => {
@@ -61,7 +79,7 @@ const Collections = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
       {/* Breadcrumb */}
@@ -77,7 +95,7 @@ const Collections = () => {
 
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 lg:py-12">
         {/* Main Content */}
-        <main className="w-full">
+        <main className="w-full flex-1">
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-10">
             <div>
@@ -139,6 +157,7 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
   const eager = index < 6; // first rows load eagerly
   const cardRef = useRef<HTMLDivElement | null>(null);
   const frontSrc = pickFrontImage(product?.images);
+  const sideSrc = pickSideImage(product?.images) || frontSrc;
 
   const doPreload = () => {
     if (frontSrc) preloadImageLink(frontSrc, index < 4 ? 'high' : 'low');
@@ -174,6 +193,7 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
       onPointerDown={doPreload}
     >
       <div className="relative overflow-hidden rounded-lg bg-muted mb-3 aspect-[3/4] transition-all duration-500 hover:shadow-xl hover:shadow-accent/10">
+        {/* Primary (front) */}
         <img
           src={frontSrc}
           alt={`${product.displayName} - Front view`}
@@ -182,9 +202,23 @@ const ProductCard = ({ product, navigate, index }: ProductCardProps) => {
           width={960}
           height={1280}
           sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0"
           onError={(e) => {
             e.currentTarget.src = '/placeholder.svg';
+          }}
+        />
+        {/* Hover (side) */}
+        <img
+          src={sideSrc}
+          alt={`${product.displayName} - Side view`}
+          loading="lazy"
+          decoding="async"
+          width={960}
+          height={1280}
+          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 20vw"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          onError={(e) => {
+            e.currentTarget.src = frontSrc;
           }}
         />
       </div>

@@ -11,19 +11,36 @@ import { getAllProducts, Product } from "@/utils/productData";
 // Helper to prefer a front-facing image by filename pattern
 const pickFrontImage = (images: string[] = []): string => {
   if (!images?.length) return '/placeholder.svg';
+  const lower = images.map((s) => s.toLowerCase());
+  const isBack = (s: string) => /t-4\.png|\/4\.png|back/.test(s);
   const patterns = [
-    /(front|t-1\.png|\/1\.png)$/i,
+    /front/,
+    /t-1\.png|\/1\.png/i,
     /t-2\.png|\/2\.png/i,
     /t-3\.png|\/3\.png/i,
     /t-5\.png|\/5\.png/i,
-    /t-4\.png|\/4\.png/i,
   ];
-  const lower = images.map((s) => s.toLowerCase());
   for (const p of patterns) {
+    const idx = lower.findIndex((s) => p.test(s) && !isBack(s));
+    if (idx !== -1) return images[idx];
+  }
+  const firstNotBack = lower.findIndex((s) => !isBack(s));
+  return images[firstNotBack !== -1 ? firstNotBack : 0];
+};
+
+// Helper to pick a side image for hover
+const pickSideImage = (images: string[] = []): string | null => {
+  if (!images?.length) return null;
+  const lower = images.map((s) => s.toLowerCase());
+  const candidates = [
+    /t-2\.png|\/2\.png/i,
+    /t-3\.png|\/3\.png/i,
+  ];
+  for (const p of candidates) {
     const idx = lower.findIndex((s) => p.test(s));
     if (idx !== -1) return images[idx];
   }
-  return images[0];
+  return null;
 };
 
 
@@ -101,19 +118,28 @@ const Essentials = () => {
               className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
             >
               {/* Product Image */}
-              <div 
-                className="aspect-[3/4] bg-muted relative overflow-hidden group cursor-pointer"
-                onClick={() => { window.scrollTo({ top: 0, behavior: 'auto' }); navigate(`/collections/${product.slug}`); }}
-              >
-                <img
-                  src={pickFrontImage(product.images)}
-                  alt={`${product.displayName} - Front view`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-4 right-4 bg-accent text-background px-3 py-1 rounded-full text-sm font-semibold">
-                  70% OFF
-                </div>
-              </div>
+<div 
+  className="aspect-[3/4] bg-muted relative overflow-hidden group cursor-pointer"
+  onClick={() => { window.scrollTo({ top: 0, behavior: 'auto' }); navigate(`/collections/${product.slug}`); }}
+>
+  {/* Primary (front) */}
+  <img
+    src={pickFrontImage(product.images)}
+    alt={`${product.displayName} - Front view`}
+    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0"
+  />
+  {/* Hover (side) */}
+  <img
+    src={pickSideImage(product.images) || pickFrontImage(product.images)}
+    alt={`${product.displayName} - Side view`}
+    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    loading="lazy"
+    decoding="async"
+  />
+  <div className="absolute top-4 right-4 bg-accent text-background px-3 py-1 rounded-full text-sm font-semibold">
+    70% OFF
+  </div>
+</div>
 
               {/* Product Info */}
               <div className="p-6 space-y-4">
