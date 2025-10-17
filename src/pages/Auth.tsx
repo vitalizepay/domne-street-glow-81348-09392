@@ -98,72 +98,74 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
-      <div className="container mx-auto px-6 py-20">
-        <div className="max-w-md mx-auto bg-card border border-border rounded-lg p-8">
-          <h1 className="text-3xl font-bold text-center mb-2">
-            {isLogin ? "Welcome Back" : "Create Account"}
-          </h1>
-          <p className="text-muted-foreground text-center mb-8">
-            {isLogin ? "Login to continue shopping" : "Sign up to complete your purchase"}
-          </p>
+      <main className="flex-1">
+        <div className="container mx-auto px-6 py-12 md:py-20">
+          <div className="max-w-md mx-auto bg-card border border-border rounded-lg p-8">
+            <h1 className="text-3xl font-bold text-center mb-2">
+              {isLogin ? "Welcome Back" : "Create Account"}
+            </h1>
+            <p className="text-muted-foreground text-center mb-8">
+              {isLogin ? "Login to continue shopping" : "Sign up to complete your purchase"}
+            </p>
 
-          <form onSubmit={isLogin ? handleLogin : handleSignup} className="space-y-4">
-            {!isLogin && (
+            <form onSubmit={isLogin ? handleLogin : handleSignup} className="space-y-4">
+              {!isLogin && (
+                <div>
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input
+                    id="fullName"
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                    placeholder="Enter your full name"
+                  />
+                </div>
+              )}
+
               <div>
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  id="fullName"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
-                  placeholder="Enter your full name"
+                  placeholder="Enter your email"
                 />
               </div>
-            )}
 
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="Enter your email"
-              />
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Enter your password"
+                  minLength={6}
+                />
+              </div>
+
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
+              </Button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setIsLogin(!isLogin)}
+                className="text-accent hover:underline text-sm"
+              >
+                {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
+              </button>
             </div>
-
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="Enter your password"
-                minLength={6}
-              />
-            </div>
-
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-accent hover:underline text-sm"
-            >
-              {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
-            </button>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

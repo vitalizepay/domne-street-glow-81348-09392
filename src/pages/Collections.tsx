@@ -23,12 +23,13 @@ const preloadImageLink = (url: string, priority: 'high' | 'low' = 'low') => {
 // Helper to prefer a front-facing image by filename pattern
 const pickFrontImage = (images: string[] = []): string => {
   if (!images?.length) return '/placeholder.svg';
+  // Prefer clear front, then side, then other angles; keep BACK (T-4) last
   const patterns = [
-    /(front|t-1\.png|\/1\.png)$/i, // common front
-    /t-3\.png|\/3\.png/i,          // alternate front/sitting front
-    /t-2\.png|\/2\.png/i,          // side as fallback
-    /t-4\.png|\/4\.png/i,
+    /(front|t-1\.png|\/1\.png)$/i,
+    /t-2\.png|\/2\.png/i,
+    /t-3\.png|\/3\.png/i,
     /t-5\.png|\/5\.png/i,
+    /t-4\.png|\/4\.png/i,
   ];
   const lower = images.map((s) => s.toLowerCase());
   for (const p of patterns) {
@@ -45,11 +46,11 @@ const Collections = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Preload first 12 products' first two images in the background
+    // Preload first 12 products' primary (front) image
     const primaries = sortedProducts.slice(0, 12);
     primaries.forEach((p, i) => {
-      if (p?.images?.[0]) preloadImageLink(p.images[0], i < 4 ? 'high' : 'low');
-      if (p?.images?.[1]) preloadImageLink(p.images[1], 'low');
+      const front = pickFrontImage(p?.images);
+      if (front) preloadImageLink(front, i < 4 ? 'high' : 'low');
     });
   }, []);
 

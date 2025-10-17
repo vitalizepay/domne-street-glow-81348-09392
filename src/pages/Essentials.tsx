@@ -13,10 +13,10 @@ const pickFrontImage = (images: string[] = []): string => {
   if (!images?.length) return '/placeholder.svg';
   const patterns = [
     /(front|t-1\.png|\/1\.png)$/i,
-    /t-3\.png|\/3\.png/i,
     /t-2\.png|\/2\.png/i,
-    /t-4\.png|\/4\.png/i,
+    /t-3\.png|\/3\.png/i,
     /t-5\.png|\/5\.png/i,
+    /t-4\.png|\/4\.png/i,
   ];
   const lower = images.map((s) => s.toLowerCase());
   for (const p of patterns) {
