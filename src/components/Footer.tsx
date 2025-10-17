@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import domineLogo from "@/assets/domine-logo.png";
+import domineLogo from "@/assets/domine-logo-white.png";
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });

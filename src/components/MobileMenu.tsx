@@ -1,6 +1,6 @@
 import { Home, ShoppingBag, Palette, Mail } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import domineLogo from "@/assets/domine-logo.png";
+import domineLogo from "@/assets/domine-logo-white.png";
 
 const menuItems = [
   { title: "Home", url: "/", icon: Home },
