@@ -26,28 +26,28 @@ export const generateSlug = (folderName: string): string => {
 export const getFolderColors = (folderName: string): string[] => {
   const name = folderName.toLowerCase();
 
-  // Essentials collection colors based on PDF
-  if (name.includes("g-t")) return ["#008080"]; // Teal
-  if (name.includes("mauve")) return ["#E5D4B5"]; // Biscuit
-  if (name.includes("m-t-ab")) return ["#800000"]; // Maroon
-  if (name.includes("mint-green")) return ["#77B05D"]; // Sage Green
-  if (name.includes("dusty-rose")) return ["#FFDAB9"]; // Peach
-  if (name.includes("khaki")) return ["#C3B091"]; // Khaki
-  if (name.includes("dark-gray") || name.includes("dark-grey")) return ["#808080"]; // Grey
+  // Essentials collection colors - exact match to actual product colors
+  if (name.includes("mint-green")) return ["#98D8C8"]; // Mint Green (light teal/aqua)
+  if (name.includes("dusty-rose")) return ["#D8A8A0"]; // Dusty Rose (peachy pink)
+  if (name.includes("mauve")) return ["#C8B4A0"]; // Mauve/Biscuit
+  if (name.includes("g-t")) return ["#5FB5AA"]; // Teal/Sage Green
+  if (name.includes("m-t-ab")) return ["#8B4853"]; // Maroon
+  if (name.includes("khaki")) return ["#B8A888"]; // Khaki
+  if (name.includes("dark-gray") || name.includes("dark-grey")) return ["#6B6B6B"]; // Grey
   
-  // Other collections
-  if (name.includes("black")) return ["#000000"];
-  if (name.includes("white")) return ["#FFFFFF"];
-  if (name.includes("olive-green")) return ["#6B7C5B"];
-  if (name.includes("green")) return ["#3A6B4A"];
-  if (name.includes("dusty-blue")) return ["#7B9FB8"];
+  // Other collections - precise color matching
+  if (name.includes("plane-black") || name === "black-t" || name === "black-t-2") return ["#1A1A1A"];
+  if (name.includes("plane-white") || name === "white-t" || name === "white-t-2") return ["#F5F5F5"];
+  if (name.includes("olive-green")) return ["#7A8B6F"];
+  if (name.includes("green")) return ["#4A7C59"];
+  if (name.includes("dusty-blue")) return ["#8BA5B8"];
   if (name.includes("light-blue")) return ["#A8C5D9"];
-  if (name.includes("dark-shade-of-gray")) return ["#4A4A4A"];
-  if (name.includes("very-dark-shade-of-blue")) return ["#1F2937"];
-  if (name.includes("rust")) return ["#A85A4A"];
-  if (name.includes("tie-dye")) return ["#8B5A3A", "#2C2420"];
+  if (name.includes("dark-shade-of-gray")) return ["#4D4D4D"];
+  if (name.includes("very-dark-shade-of-blue")) return ["#2C3E50"];
+  if (name.includes("rust")) return ["#B87A6A"];
+  if (name.includes("tie-dye")) return ["#8B6A4A", "#3A2C20"];
 
-  return ["#000000"]; // default
+  return ["#1A1A1A"]; // default
 };
 
 // Product folders in the images/collections directory - rearranged order
@@ -146,17 +146,17 @@ for (let i = 1; i <= imageCount; i++) {
   // Map folder names to product names (for Essentials collection products)
   const getProductName = (folder: string): string => {
     const essentialsMapping: Record<string, string> = {
-      "khaki-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Khaki",
-      "black-t": "DOMINE Essentials – Basic Plain T-Shirt – Black",
-      "white-t": "DOMINE Essentials – Basic Plain T-Shirt – White",
-      "plane-white-t": "DOMINE Essentials – Basic Plain T-Shirt – White",
-      "plane-black-t": "DOMINE Essentials – Basic Printed T-Shirt with Puff Print – Black",
-      "dark-grey": "DOMINE Essentials – Basic Printed T-Shirt with HD Print – Grey",
-      "m-t-ab": "DOMINE Essentials – Basic Round Neck T-Shirt – Maroon",
-      "dusty-rose-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Peach",
-      "mint-green-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Sage Green",
-      "g-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Teal",
-      "mauve-t": "DOMINE Essentials – Basic Round Neck T-Shirt – Biscuit",
+      "khaki-t": "Basic Round Neck T-Shirt – Khaki",
+      "black-t": "Basic Plain T-Shirt – Black",
+      "white-t": "Basic Plain T-Shirt – White",
+      "plane-white-t": "Basic Plain T-Shirt – White",
+      "plane-black-t": "Basic Printed T-Shirt with Puff Print – Black",
+      "dark-grey": "Basic Printed T-Shirt with HD Print – Grey",
+      "m-t-ab": "Basic Round Neck T-Shirt – Maroon",
+      "dusty-rose-t": "Basic Round Neck T-Shirt – Peach",
+      "mint-green-t": "Basic Round Neck T-Shirt – Sage Green",
+      "g-t": "Basic Round Neck T-Shirt – Teal",
+      "mauve-t": "Basic Round Neck T-Shirt – Biscuit",
     };
 
     return essentialsMapping[folder] || "Men's Cut & Sew HD Print T-Shirt";

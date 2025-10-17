@@ -9,51 +9,52 @@ export default function SizeGuide() {
         <table className="w-full text-sm">
           <thead className="bg-muted/50">
             <tr>
-              <th className="px-4 py-3 text-left font-semibold">Size</th>
-              <th className="px-4 py-3 text-left font-semibold">Chest (in)</th>
-              <th className="px-4 py-3 text-left font-semibold">Shoulder (in)</th>
-              <th className="px-4 py-3 text-left font-semibold">Length (in)</th>
-              <th className="px-4 py-3 text-left font-semibold">Sleeve (in)</th>
+              <th className="px-4 py-3 text-left font-semibold uppercase">SIZE</th>
+              <th className="px-4 py-3 text-left font-semibold uppercase">CHEST</th>
+              <th className="px-4 py-3 text-left font-semibold uppercase">FRONT LENGTH</th>
+              <th className="px-4 py-3 text-left font-semibold uppercase">ACROSS SHOULDER</th>
+              <th className="px-4 py-3 text-left font-semibold uppercase">SLEEVE LENGTH</th>
             </tr>
           </thead>
           <tbody>
             <tr className="border-t border-border">
               <td className="px-4 py-3 font-medium">S</td>
-              <td className="px-4 py-3">37.0</td>
-              <td className="px-4 py-3">16.5</td>
-              <td className="px-4 py-3">26.8</td>
-              <td className="px-4 py-3">7.0</td>
+              <td className="px-4 py-3">94</td>
+              <td className="px-4 py-3">68</td>
+              <td className="px-4 py-3">42</td>
+              <td className="px-4 py-3">18</td>
             </tr>
             <tr className="bg-muted/30 border-t border-border">
               <td className="px-4 py-3 font-medium">M</td>
-              <td className="px-4 py-3">38.6</td>
-              <td className="px-4 py-3">17.1</td>
-              <td className="px-4 py-3">27.6</td>
-              <td className="px-4 py-3">7.5</td>
+              <td className="px-4 py-3">98</td>
+              <td className="px-4 py-3">70</td>
+              <td className="px-4 py-3">44</td>
+              <td className="px-4 py-3">19</td>
             </tr>
             <tr className="border-t border-border">
               <td className="px-4 py-3 font-medium">L</td>
-              <td className="px-4 py-3">40.2</td>
-              <td className="px-4 py-3">17.7</td>
-              <td className="px-4 py-3">28.3</td>
-              <td className="px-4 py-3">8.0</td>
+              <td className="px-4 py-3">102</td>
+              <td className="px-4 py-3">72</td>
+              <td className="px-4 py-3">45</td>
+              <td className="px-4 py-3">20</td>
             </tr>
             <tr className="bg-muted/30 border-t border-border">
               <td className="px-4 py-3 font-medium">XL</td>
-              <td className="px-4 py-3">43.3</td>
-              <td className="px-4 py-3">18.7</td>
-              <td className="px-4 py-3">29.1</td>
-              <td className="px-4 py-3">8.3</td>
+              <td className="px-4 py-3">110</td>
+              <td className="px-4 py-3">74</td>
+              <td className="px-4 py-3">48</td>
+              <td className="px-4 py-3">21</td>
             </tr>
             <tr className="border-t border-border">
               <td className="px-4 py-3 font-medium">XXL</td>
-              <td className="px-4 py-3">46.5</td>
-              <td className="px-4 py-3">19.7</td>
-              <td className="px-4 py-3">30.0</td>
-              <td className="px-4 py-3">8.7</td>
+              <td className="px-4 py-3">118</td>
+              <td className="px-4 py-3">76</td>
+              <td className="px-4 py-3">50</td>
+              <td className="px-4 py-3">22</td>
             </tr>
           </tbody>
         </table>
+        <p className="text-sm font-semibold text-right mt-2 px-4">cms</p>
       </div>
 
       <p className="text-xs text-muted-foreground">
@@ -73,16 +74,16 @@ export default function SizeGuide() {
           />
           <ul className="text-sm list-disc pl-5 space-y-2">
             <li>
-              <strong>Chest:</strong> Measure around the fullest part, keeping the tape horizontal.
+              <strong>CHEST:</strong> Measure around the fullest part, keeping the tape horizontal.
             </li>
             <li>
-              <strong>Shoulder:</strong> Measure seam-to-seam across the back.
+              <strong>FRONT LENGTH:</strong> From the highest shoulder point to hem.
             </li>
             <li>
-              <strong>Length:</strong> From the highest shoulder point to hem.
+              <strong>ACROSS SHOULDER:</strong> Measure seam-to-seam across the back.
             </li>
             <li>
-              <strong>Sleeve:</strong> From shoulder seam to end of sleeve.
+              <strong>SLEEVE LENGTH:</strong> From shoulder seam to end of sleeve.
             </li>
           </ul>
         </div>

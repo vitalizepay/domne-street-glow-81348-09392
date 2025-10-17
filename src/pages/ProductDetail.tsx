@@ -240,8 +240,8 @@ const ProductDetail = () => {
               <img
                 src={product.images[selectedImage]}
                 alt={`${product.displayName} - View ${selectedImage + 1}`}
-                loading="eager"
-                fetchPriority="high"
+                loading={selectedImage === 0 ? "eager" : "lazy"}
+                fetchPriority={selectedImage === 0 ? "high" : "low"}
                 decoding="async"
                 width={1200}
                 height={1600}
