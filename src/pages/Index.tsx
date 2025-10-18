@@ -14,7 +14,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[hsl(var(--landing-bg-gradient-start))] to-[hsl(var(--landing-bg-gradient-end))]">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSlider />
       <CategorySection />

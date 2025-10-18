@@ -38,18 +38,6 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
     
-    /* Premium Landing Page Theme */
-    --landing-primary: 215 85% 28%;
-    --landing-primary-light: 215 75% 42%;
-    --landing-secondary: 220 90% 18%;
-    --landing-accent: 348 83% 62%;
-    --landing-gold: 42 85% 55%;
-    --landing-gold-dark: 38 75% 45%;
-    --landing-bg-gradient-start: 0 0% 100%;
-    --landing-bg-gradient-end: 220 45% 96%;
-    --landing-text-hero: 217 13% 8%;
-    --landing-text-muted: 217 10% 36%;
-    
     /* Rich design tokens */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -57,8 +45,6 @@ All colors MUST be HSL.
     --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
     --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
     --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.12);
-    --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    --shadow-glow: 0 0 40px rgba(215, 85%, 28%, 0.15);
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 217 10% 36%;

@@ -27,7 +27,7 @@ const CategorySection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-transparent">
+    <section className="py-16 px-4 bg-background">
       <div className="container mx-auto">
         {/* Mobile Carousel */}
         <div className="md:hidden">
@@ -43,7 +43,7 @@ const CategorySection = () => {
                 <CarouselItem key={category.title} className="pl-2 md:pl-4">
                   <div
                     onClick={() => navigate(category.link)}
-                    className="group relative overflow-hidden cursor-pointer rounded-xl aspect-[3/4] bg-card border-0 shadow-[var(--shadow-premium)] transition-all duration-500 hover:shadow-[var(--shadow-glow)] hover:-translate-y-2"
+                    className="group relative overflow-hidden cursor-pointer rounded-lg aspect-[3/4] bg-card border border-border shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-hover)] hover:-translate-y-1"
                   >
                     <img
                       src={category.image}
@@ -71,7 +71,7 @@ const CategorySection = () => {
             <div
               key={category.title}
               onClick={() => navigate(category.link)}
-              className="group relative overflow-hidden cursor-pointer rounded-xl aspect-[3/4] bg-card border-0 shadow-[var(--shadow-premium)] transition-all duration-500 hover:shadow-[var(--shadow-glow)] hover:-translate-y-2"
+              className="group relative overflow-hidden cursor-pointer rounded-lg aspect-[3/4] bg-card border border-border shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-hover)] hover:-translate-y-1"
             >
               <img
                 src={category.image}

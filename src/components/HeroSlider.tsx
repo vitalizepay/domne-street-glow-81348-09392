@@ -162,7 +162,7 @@ const HeroSlider = () => {
                 <Button
                   size="lg"
                   onClick={() => navigate('/collections')}
-                  className="bg-gradient-to-r from-[hsl(var(--landing-gold))] to-[hsl(var(--landing-gold-dark))] hover:shadow-[0_0_30px_hsl(var(--landing-gold)/0.5)] text-white font-bold text-xs sm:text-sm tracking-widest px-8 sm:px-10 py-5 sm:py-6 rounded-full border-0 transition-all duration-300 hover:scale-105 active:scale-95 min-h-[48px] w-full sm:w-auto shadow-xl"
+                  className="bg-accent hover:bg-accent/90 text-background font-bold text-xs sm:text-sm tracking-widest px-6 sm:px-8 py-5 sm:py-6 rounded-full border-2 border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 active:scale-95 min-h-[48px] w-full sm:w-auto"
                 >
                   {slide.cta}
                 </Button>
@@ -196,8 +196,8 @@ const HeroSlider = () => {
             onClick={() => goToSlide(index)}
             className={`transition-all duration-300 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center ${
               index === currentSlide
-                ? "w-10 sm:w-12 h-3 bg-[hsl(var(--landing-gold))] shadow-lg shadow-[hsl(var(--landing-gold)/0.5)]"
-                : "w-3 h-3 bg-foreground/30 hover:bg-[hsl(var(--landing-gold-dark))]"
+                ? "w-10 sm:w-12 h-3 bg-accent shadow-lg shadow-accent/50"
+                : "w-3 h-3 bg-foreground/30 hover:bg-foreground/50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
