@@ -40,6 +40,8 @@ const ProductDetail = () => {
   const preloadLinksRef = useRef<HTMLLinkElement[]>([]);
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
  
 const nextImage = () => {
   if (imagesLength > 1) {
@@ -55,28 +57,33 @@ const prevImage = () => {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndX.current = e.touches[0].clientX;
+    touchEndY.current = e.touches[0].clientY;
   };
 
   const handleTouchEnd = () => {
     if (!touchStartX.current || !touchEndX.current) return;
     
-    const distance = touchStartX.current - touchEndX.current;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      nextImage();
-    }
-    if (isRightSwipe) {
-      prevImage();
+    const distanceX = touchStartX.current - touchEndX.current;
+    const distanceY = Math.abs(touchEndY.current - touchStartY.current);
+    
+    // Only handle horizontal swipe if horizontal movement > vertical movement
+    if (Math.abs(distanceX) > distanceY && Math.abs(distanceX) > 50) {
+      if (distanceX > 0) {
+        nextImage();
+      } else {
+        prevImage();
+      }
     }
 
     touchStartX.current = 0;
     touchEndX.current = 0;
+    touchStartY.current = 0;
+    touchEndY.current = 0;
   };
 
   useEffect(() => {
@@ -247,7 +254,7 @@ cartStore.addToCart({
           <div className="space-y-4">
             {/* Main Image */}
             <div 
-              className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group touch-pan-y"
+              className="relative aspect-[3/4] bg-muted rounded-lg overflow-hidden group"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
